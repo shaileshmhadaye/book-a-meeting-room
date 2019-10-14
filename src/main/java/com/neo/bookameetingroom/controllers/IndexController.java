@@ -10,4 +10,9 @@ public class IndexController {
     public String index(){
         return "login";
     }
+
+    @RequestMapping("/register")
+    public String register(){
+        return "register";
+    }
 }
