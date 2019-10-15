@@ -1,41 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Register</title>
 </head>
 <body>
 
     <h2>Registration</h2>
     <table>
-        <form>
+        <form  action="#" th:action="@{/register_person}" th:object="${person}" method="post">
             <tr>
-                <td>First Name:</td><td><input type="text" id="firstname" placeholder="Enter First Name"></td>
+                <td>First Name:</td><td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name"></td>
             </tr>
             <tr>
-                <td>Last Name:</td><td><input type="text" id="lastname" placeholder="Enter Last Name"></td>
+                <td>Last Name:</td><td><input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name"></td>
             </tr>
             <tr>
                 <td>Gender:</td><td><input type="radio" name="gender" value="male">Male  <input type="radio" name="gender" value="female">Female  <input type="radio" name="gender" value="other">Other</td>
             </tr>
             <tr>
-                <td>Department:</td><td><input type="text" id="department" placeholder="Enter Department Name"></td>
+                <td>Department:</td><td><input type="text" id="department" th:field="*{department}" placeholder="Enter Department Name"></td>
             </tr>
             <tr>
-                <td>Location:</td><td><input type="text" id="location" placeholder="Enter Your Location"></td>
+                <td>Location:</td><td><input type="text" id="location" th:field="*{location}" placeholder="Enter Your Location"></td>
+            </tr>
+            <tr>
+                <td>Email ID:</td><td><input type="text" id="email" th:field="*{email}" placeholder="Enter Email ID"></td>
+            </tr>
+            <tr>
+                <td>Username:</td><td><input type="text" id="username" th:field="*{username}" placeholder="Enter Username"></td>
+            </tr>
+            <tr>
+                <td>Password:</td><td><input type="password" id="password" th:field="*{password}" placeholder="Enter Password"></td>
             </tr>
             <!--<tr>
                 <td>Re-enter Password:</td><td><input type="password" id="password1" placeholder="Re-enter Password"></td>
             </tr>-->
-            <tr>
-                <td>Email ID:</td><td><input type="text" id="email" placeholder="Enter Email ID"></td>
-            </tr>
-            <tr>
-                <td>Username:</td><td><input type="text" id="username" placeholder="Enter Username"></td>
-            </tr>
-            <tr>
-                <td>Password:</td><td><input type="password" id="password" placeholder="Enter Password"></td>
-            </tr>
             <tr>
                 <td><input type="submit" id="submit" value="Register"></td>
             </tr>
