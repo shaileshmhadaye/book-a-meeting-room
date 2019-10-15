@@ -1,14 +1,12 @@
 package com.neo.bookameetingroom.controllers;
 
 import com.neo.bookameetingroom.model.Person;
-import com.neo.bookameetingroom.repositories.PersonRepository;
+import com.neo.bookameetingroom.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -16,7 +14,7 @@ import javax.validation.Valid;
 public class PersonController {
 
     @Autowired
-    private PersonRepository personRepository;
+    private PersonService personService;
 
     @RequestMapping("/register")
     public String register(Model model){
@@ -26,7 +24,7 @@ public class PersonController {
 
     @PostMapping("/register_person")
     public String  register(@Valid Person person){
-        personRepository.save(person);
+        personService.save(person);
         return "login";
     }
 }
