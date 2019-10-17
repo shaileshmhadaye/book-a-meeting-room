@@ -6,18 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ROLES")
-public class Roles {
+public class Role {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String description;
     private String status;
+
+//    @ManyToMany(mappedBy="roles")
+//    private List<Person> personList;
 }

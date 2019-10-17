@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Setter
@@ -13,7 +14,7 @@ import javax.persistence.*;
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String firstName;
     private String lastName;
@@ -23,7 +24,11 @@ public class Person {
     private String department;
     private String location;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Roles role;
+//    @ManyToMany(cascade=CascadeType.MERGE)
+//    @JoinTable(
+//            name="person_role",
+//            joinColumns={@JoinColumn(name="PERSON_ID", referencedColumnName="ID")},
+//            inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+//    private List<Role> roles;
 
 }

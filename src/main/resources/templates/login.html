@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Login</title>
 </head>
 <body>
     <h2>Login</h2>
     <table>
-        <form>
+        <form action="/home.html" method="post"><!--th:action="@{/login}"-->
             <tr>
-                <td>Username:</td><td><input type="text" id="username" placeholder="Enter Username"></td>
+                <td>Username:</td><td><input type="text" name="username" id="username" placeholder="Enter Username"></td>
             </tr>
             <tr>
-                <td>Password:</td><td><input type="password" id="password" placeholder="Enter Password"></td>
+                <td>Password:</td><td><input type="password" name="password" id="password" placeholder="Enter Password"></td>
             </tr>
-            <tr><td><input type="submit" value="Login"></td></tr>
+            <tr><td><input type="submit" value="Login" ></td></tr>
+            <tr><td><input type="checkbox" name="remember-me"> Remember Me</td></tr>
         </form>
     </table>
     <p> New Here? <a href="/register">Register</a></p>

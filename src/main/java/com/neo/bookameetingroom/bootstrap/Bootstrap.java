@@ -1,7 +1,6 @@
 package com.neo.bookameetingroom.bootstrap;
 
 import com.neo.bookameetingroom.model.Person;
-import com.neo.bookameetingroom.model.Roles;
 import com.neo.bookameetingroom.repositories.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ public class Bootstrap implements CommandLineRunner {
         //Roles roles = new Roles(1L,"Admin","active");
 
         Person person = new Person();
+        person.setId(6L);
         person.setFirstName("shailesh");
         person.setLastName("Mhadaye");
         person.setEmail("shailesh@gmail.com");
