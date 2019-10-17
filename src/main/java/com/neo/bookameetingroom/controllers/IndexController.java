@@ -6,13 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-    @RequestMapping({"", "/", "/login"})
-    public String index(){
-        return "login";
-    }
+//    @RequestMapping("/login")
+//    public String index(){
+//        return "login";
+//    }
 
-    @RequestMapping("/home")
+    @RequestMapping({"", "/", "/home"})
     public String home(){
         return "dashboard";
+    }
+    @RequestMapping("/logout-success")
+    public String logout(){
+        return "logout";
     }
 }
