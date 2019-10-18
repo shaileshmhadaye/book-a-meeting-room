@@ -5,18 +5,18 @@
 --     last_used timestamp not null
 --);
 --
---delete from  person_role;
+delete from  person_role;
 delete from  role;
 delete from  person;
---
---INSERT INTO role (id, description) VALUES
---(1, 'ROLE_ADMIN'),
---(2, 'ROLE_ACTUATOR'),
---(3, 'ROLE_USER');
---
-INSERT INTO person (id, email, password, username) VALUES
-(1, 'admin@gmail.com', '1234', 'Admin'),
-(3, 'user@gmail.com', '2345', 'User');
+
+INSERT INTO role (role_id, role) VALUES
+(1, 'User');
+--(2, 'ACTUATOR'),
+--(3, 'USER');
+
+--INSERT INTO person (id, email, password) VALUES
+--(1, 'admin@gmail.com', '1234');
+--(3, 'user@gmail.com', '2345', 'User');
 
 --insert into person_role(person_id, role_id) values
 --(1,1),

@@ -13,14 +13,14 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "role")
 public class Role {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "role_id")
     private Long id;
-    private String description;
-    private String status;
+    @Column(name = "role")
+    private String role;
 
-//    @ManyToMany(mappedBy="roles")
-//    private List<Person> personList;
 }

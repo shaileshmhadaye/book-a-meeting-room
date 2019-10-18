@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
     <title>Register</title>
 </head>
 <body>
 
     <h2>Registration</h2>
     <table>
-        <form  action="#" th:action="@{/register_person}" th:object="${person}" method="post">
+        <form  action="#" th:action="@{/register}" th:object="${person}" method="post">
             <tr>
                 <td>First Name:</td><td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name"></td>
             </tr>
@@ -28,17 +29,16 @@
                 <td>Email ID:</td><td><input type="text" id="email" th:field="*{email}" placeholder="Enter Email ID"></td>
             </tr>
             <tr>
-                <td>Username:</td><td><input type="text" id="username" th:field="*{username}" placeholder="Enter Username"></td>
-            </tr>
-            <tr>
                 <td>Password:</td><td><input type="password" id="password" th:field="*{password}" placeholder="Enter Password"></td>
             </tr>
-            <!--<tr>
-                <td>Re-enter Password:</td><td><input type="password" id="password1" placeholder="Re-enter Password"></td>
-            </tr>-->
+            <tr>
+                <td>Status:</td><td><input type="number" id="active" placeholder="1 if active otherwise 0"></td>
+            </tr>
             <tr>
                 <td><input type="submit" id="submit" value="Register"></td>
             </tr>
+
+            <tr><td><span th:utext="${successMessage}"></span></td></tr>
         </form>
     </table>
 </body>

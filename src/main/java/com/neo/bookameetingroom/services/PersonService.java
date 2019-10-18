@@ -10,4 +10,5 @@ public interface PersonService {
     List<Person> findAll();
     Optional<Person> findById(Long id);
     void deleteById(Long id);
+    Person findByEmail(String email);
 }
