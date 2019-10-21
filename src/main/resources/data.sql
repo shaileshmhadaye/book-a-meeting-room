@@ -14,6 +14,9 @@ INSERT INTO role (role_id, role) VALUES
 --(2, 'ACTUATOR'),
 --(3, 'USER');
 
+insert into person(person_id, department, email, first_name, last_name, location, password, active) values(3, "testing", "test@g.com", "test", "test", "mumbai", "$2a$10$yZMQfTjCQKLyjdMH1j8B/ewJFiPPru0/HrX53p3Hjk.XYAtDxTv6W", 1);
+insert into person_role(person_id, role_id) values(3,1);
+
 --INSERT INTO person (id, email, password) VALUES
 --(1, 'admin@gmail.com', '1234');
 --(3, 'user@gmail.com', '2345', 'User');

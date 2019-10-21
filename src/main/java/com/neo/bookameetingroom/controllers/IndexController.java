@@ -69,4 +69,9 @@ public class IndexController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "access-denied")
+    public String accessDenied(){
+        return "access-denied";
+    }
+
 }
