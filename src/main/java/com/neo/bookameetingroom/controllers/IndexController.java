@@ -4,7 +4,6 @@ import com.neo.bookameetingroom.model.Person;
 import com.neo.bookameetingroom.services.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -88,6 +86,12 @@ public class IndexController {
         person.setActive(person2.getActive());
         person.setRoles(person2.getRoles());
         personService.save(person);
+        return "admin/home";
+    }
+
+    @RequestMapping(value = "/admin/delete/{id}")
+    public String delete(@PathVariable Long id){
+        personService.deleteById(id);
         return "admin/home";
     }
 
