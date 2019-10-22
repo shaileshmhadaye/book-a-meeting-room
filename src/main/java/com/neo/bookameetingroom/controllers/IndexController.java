@@ -4,15 +4,17 @@ import com.neo.bookameetingroom.model.Person;
 import com.neo.bookameetingroom.services.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -63,15 +65,40 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
-        modelAndView.addObject("username", "Welcome " + user.getEmail() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
+        modelAndView.addObject("users", personService.findAll());
         modelAndView.setViewName("admin/home");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.GET)
+    public String edit(@PathVariable Long id, Model model){
+        Person person = personService.findById(id).orElse(null);
+        model.addAttribute("person", person);
+        model.addAttribute("id", id);
+        return "admin/edit";
+    }
+
+    @PutMapping(value = "/admin/editSave/{id}")
+    public String editSave(@PathVariable Long id, @Valid @ModelAttribute("person") Person person){
+        Person person2 = personService.findById(id).orElse(null);
+        person.setId(id);
+        person.setPassword(person2.getPassword());
+        person.setActive(person2.getActive());
+        person.setRoles(person2.getRoles());
+        personService.save(person);
+        return "admin/home";
     }
 
     @RequestMapping(value = "access-denied")
     public String accessDenied(){
         return "access-denied";
+    }
+
+    @RequestMapping(value = "user/home")
+    public String userHome(){
+        return "user/home";
     }
 
 }
