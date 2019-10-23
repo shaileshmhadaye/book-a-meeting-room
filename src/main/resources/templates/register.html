@@ -24,7 +24,16 @@
                 <td>Gender:</td><td><input type="radio" name="gender" value="male">Male  <input type="radio" name="gender" value="female">Female  <input type="radio" name="gender" value="other">Other</td>
             </tr>
             <tr>
-                <td>Department:</td><td><input type="text" id="department" th:field="*{department}" placeholder="Enter Department Name"></td>
+                <td>Department:</td>
+                <td>
+                    <select th:field="*{department}">
+<!--                        <option disabled>Please select...</option>-->
+                        <option value="Java" th:value="Java" th:text="Java">Java</option>
+                        <option value="iOS" th:value="iOS" th:text="iOS">iOS</option>
+                        <option value="Android" th:value="Android" th:text="Android">Android</option>
+                        <option value="testing" th:value="testing" th:text="testing">testing</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>Location:</td><td><input type="text" id="location" th:field="*{location}" placeholder="Enter Your Location"></td>
@@ -36,7 +45,7 @@
                 <td>Password:</td><td><input type="password" id="password" th:field="*{password}" placeholder="Enter Password"></td>
             </tr>
             <tr>
-                <td>Status:</td><td><input type="number" id="active" placeholder="1 if active otherwise 0"></td>
+                <td>Status:</td><td><input type="number" id="active" th:field="*{active}" placeholder="1 if active otherwise 0"></td>
             </tr>
             <tr>
                 <td><input type="submit" id="submit" value="Register"></td>

@@ -21,7 +21,15 @@
                     <td>Last Name:</td><td><input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name"></td>
                 </tr>
                 <tr>
-                    <td>Department:</td><td><input type="text" id="department" th:field="*{department}" placeholder="Enter Department Name"></td>
+                    <td>Department:</td><td>
+                    <select th:field="*{department}">
+                        <!--                        <option disabled>Please select...</option>-->
+                        <option value="Java" th:value="Java" th:text="Java">Java</option>
+                        <option value="iOS" th:value="iOS" th:text="iOS">iOS</option>
+                        <option value="Android" th:value="Android" th:text="Android">Android</option>
+                        <option value="testing" th:value="testing" th:text="testing">testing</option>
+                    </select>
+                </td>
                 </tr>
                 <tr>
                     <td>Location:</td><td><input type="text" id="location" th:field="*{location}" placeholder="Enter Your Location"></td>

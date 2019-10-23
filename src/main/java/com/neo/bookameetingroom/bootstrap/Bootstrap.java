@@ -23,21 +23,21 @@ public class Bootstrap implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         log.debug("bootstrap file running");
-        Set<Role> roles = new HashSet<>();
-        Role role = new Role(4L,"Admin");
-        roles.add(role);
-
-        Person person = new Person();
-        person.setId(6L);
-        person.setFirstName("shailesh");
-        person.setLastName("Mhadaye");
-        person.setEmail("shailesh@gmail.com");
-        person.setDepartment("software development");
-        person.setPassword(new BCryptPasswordEncoder().encode("1234"));
-        person.setLocation("parel");
-        person.setRoles(roles);
-        person.setActive(1);
-
-        personRepository.save(person);
+//        Set<Role> roles = new HashSet<>();
+//        Role role = new Role(4L,"Admin");
+//        roles.add(role);
+//
+//        Person person = new Person();
+//        person.setId(6L);
+//        person.setFirstName("shailesh");
+//        person.setLastName("Mhadaye");
+//        person.setEmail("shailesh@gmail.com");
+//        person.setDepartment("software development");
+//        person.setPassword(new BCryptPasswordEncoder().encode("1234"));
+//        person.setLocation("parel");
+//        person.setRoles(roles);
+//        person.setActive(1);
+//
+//        personRepository.save(person);
     }
 }
