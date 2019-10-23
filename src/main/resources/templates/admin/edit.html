@@ -35,7 +35,18 @@
                     <td>Location:</td><td><input type="text" id="location" th:field="*{location}" placeholder="Enter Your Location"></td>
                 </tr>
                 <tr>
-                    <td>Email ID:</td><td><input type="text" id="email" th:field="*{email}" placeholder="Enter Email ID"></td>
+                    <td>Email ID:</td><td><input type="email" id="email" th:field="*{email}" placeholder="Enter Email ID"></td>
+                </tr>
+                <tr>
+                    <td>Assign Roles</td>
+                    <td>
+                        <select id="role" name="role">
+                            <option value="Admin" th:value="Admin" th:text="Admin">Admin</option>
+                            <option value="User" th:value="User" th:text="User">User</option>
+<!--                            <option value="Android" th:value="Android" th:text="Android">Android</option>-->
+<!--                            <option value="testing" th:value="testing" th:text="testing">testing</option>-->
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="submit" id="submit" value="Update"></td>
