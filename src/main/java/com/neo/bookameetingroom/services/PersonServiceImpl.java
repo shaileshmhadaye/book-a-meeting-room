@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +30,7 @@ public class PersonServiceImpl implements PersonService{
     public Person save(Person person){
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
         Role personRole = roleRepository.findByRole("User");
-        person.setRoles(new HashSet<Role>(Arrays.asList(personRole)));
+        person.setRole(personRole);
         return personRepository.save(person);
     }
 

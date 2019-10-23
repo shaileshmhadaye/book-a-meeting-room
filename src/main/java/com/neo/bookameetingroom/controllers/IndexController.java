@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 @Slf4j
 @Controller
@@ -88,7 +85,6 @@ public class IndexController {
 
     @PutMapping(value = "/admin/editSave/{id}")
     public String editSave(@PathVariable Long id, @RequestParam(name = "role") String role, @Valid @ModelAttribute("person") Person person){
-
         Person person2 = personService.findById(id).orElse(null);
 
         Role role1 = roleRepository.findByRole(role);
@@ -96,7 +92,7 @@ public class IndexController {
         person.setId(id);
         person.setPassword(person2.getPassword());
         person.setActive(person2.getActive());
-        person.setRoles(new HashSet<Role>(Arrays.asList(role1)));
+        person.setRole(role1);
         personService.save(person);
         return "admin/home";
     }

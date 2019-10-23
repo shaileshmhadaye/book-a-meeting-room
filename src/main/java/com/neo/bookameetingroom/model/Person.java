@@ -26,11 +26,7 @@ public class Person {
     private String location;
     private int active;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(
-            name="person_role",
-            joinColumns={@JoinColumn(name="PERSON_ID")},
-            inverseJoinColumns={@JoinColumn(name="ROLE_ID")})
-    private Set<Role> roles;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Role role;
 
 }
