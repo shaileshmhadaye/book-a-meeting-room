@@ -1,6 +1,8 @@
 package com.neo.bookameetingroom.controllers;
 
 import com.neo.bookameetingroom.model.Person;
+import com.neo.bookameetingroom.model.Role;
+import com.neo.bookameetingroom.repositories.RoleRepository;
 import com.neo.bookameetingroom.services.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Controller
@@ -20,6 +25,9 @@ public class IndexController {
 
     @Autowired
     private PersonService personService;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -79,12 +87,16 @@ public class IndexController {
     }
 
     @PutMapping(value = "/admin/editSave/{id}")
-    public String editSave(@PathVariable Long id, @Valid @ModelAttribute("person") Person person){
+    public String editSave(@PathVariable Long id, @RequestParam(name = "role") String role, @Valid @ModelAttribute("person") Person person){
+
         Person person2 = personService.findById(id).orElse(null);
+
+        Role role1 = roleRepository.findByRole(role);
+
         person.setId(id);
         person.setPassword(person2.getPassword());
         person.setActive(person2.getActive());
-        person.setRoles(person2.getRoles());
+        person.setRoles(new HashSet<Role>(Arrays.asList(role1)));
         personService.save(person);
         return "admin/home";
     }

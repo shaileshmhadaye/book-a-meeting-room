@@ -36,14 +36,14 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>FirstName</th>
+            <th>LastName</th>
             <th>Email</th>
             <th>Department</th>
             <th>Location</th>
             <th>Edit</th>
             <th>Delete</th>
-            <th>Assign Role</th>
+            <th>Assigned Role</th>
         </tr>
         </thead>
         <tbody>
@@ -56,6 +56,7 @@
             <td th:text="${user.location}">testAdmin</td>
             <td><a th:href="@{'/admin/edit/'+ ${user.id}}">Edit</a></td>
             <td><a th:href="@{'/admin/delete/'+ ${user.id}}">Delete</a></td>
+            <td th:text="${user.roles.role}"></td>
         </tr>
         </tbody>
     </table>

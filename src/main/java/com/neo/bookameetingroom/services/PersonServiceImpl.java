@@ -31,7 +31,7 @@ public class PersonServiceImpl implements PersonService{
 
     public Person save(Person person){
         person.setPassword(bCryptPasswordEncoder.encode(person.getPassword()));
-        Role personRole = roleRepository.findByRole("User ");
+        Role personRole = roleRepository.findByRole("User");
         person.setRoles(new HashSet<Role>(Arrays.asList(personRole)));
         return personRepository.save(person);
     }
