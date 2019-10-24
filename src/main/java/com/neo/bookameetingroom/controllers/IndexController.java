@@ -84,15 +84,19 @@ public class IndexController {
     }
 
     @PutMapping(value = "/admin/editSave/{id}")
-    public String editSave(@PathVariable Long id, @RequestParam(name = "role") String role, @Valid @ModelAttribute("person") Person person){
+    public String editSave(@PathVariable Long id, @RequestParam(name = "role") Long role, @Valid @ModelAttribute("person") Person person){
         Person person2 = personService.findById(id).orElse(null);
 
-        Role role1 = roleRepository.findByRole(role);
+        Role role2 =new Role();
+        Role role1 = roleRepository.findById(role).orElse(null);
+        role2.setId(role1.getId());
+        role2.setRole(role1.getRole());
 
         person.setId(id);
         person.setPassword(person2.getPassword());
         person.setActive(person2.getActive());
-        person.setRole(role1);
+        person.setRole(role2);
+        roleRepository.save(role2);
         personService.save(person);
         return "admin/home";
     }

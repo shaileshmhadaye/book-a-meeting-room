@@ -24,21 +24,21 @@ public class Bootstrap implements CommandLineRunner {
 
         log.debug("bootstrap file running");
 
-        Role role = new Role();
-        role.setId(4L);
-        role.setRole("Admin");
-
-        Person person = new Person();
-        person.setId(6L);
-        person.setFirstName("shailesh");
-        person.setLastName("Mhadaye");
-        person.setEmail("shailesh@gmail.com");
-        person.setDepartment("software development");
-        person.setPassword(new BCryptPasswordEncoder().encode("1234"));
-        person.setLocation("parel");
-        person.setRole(role);
-        person.setActive(1);
-
-        personRepository.save(person);
+//        Role role = new Role();
+//        role.setId(4L);
+//        role.setRole("Admin");
+//
+//        Person person = new Person();
+//        person.setId(6L);
+//        person.setFirstName("shailesh");
+//        person.setLastName("Mhadaye");
+//        person.setEmail("shailesh@gmail.com");
+//        person.setDepartment("software development");
+//        person.setPassword(new BCryptPasswordEncoder().encode("1234"));
+//        person.setLocation("parel");
+//        person.setRole(role);
+//        person.setActive(1);
+//
+//        personRepository.save(person);
     }
 }
