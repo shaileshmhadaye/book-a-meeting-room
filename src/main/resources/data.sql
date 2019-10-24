@@ -16,8 +16,9 @@
 
 --delete from person where person_id=3;
 --delete from person_role where person_id=3;
+
 delete from person where person_id=3;
-insert into person(person_id, department, email, first_name, last_name, location, password, active, role_id) values(3, "testing", "test@g.com", "test", "test", "mumbai", "$2a$10$yZMQfTjCQKLyjdMH1j8B/ewJFiPPru0/HrX53p3Hjk.XYAtDxTv6W", 1, 11);
+insert into person(person_id, department, email, first_name, last_name, location, password, active, role_id) values(3, "testing", "test@g.com", "test", "test", "mumbai", "test", 1, 11);
 --insert into person_role(person_id, role_id) values(3,112);
 
 --INSERT INTO person (id, email, password) VALUES

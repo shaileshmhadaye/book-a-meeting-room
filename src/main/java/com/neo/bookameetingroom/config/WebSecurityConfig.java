@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
@@ -37,7 +38,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .usersByUsernameQuery(usersQuery)
             .authoritiesByUsernameQuery(rolesQuery)
             .dataSource(dataSource)
-            .passwordEncoder(bCryptPasswordEncoder);
+            .passwordEncoder(NoOpPasswordEncoder.getInstance());
+//            .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override

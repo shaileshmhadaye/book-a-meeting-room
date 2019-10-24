@@ -89,7 +89,7 @@ public class IndexController {
 
         Role role2 =new Role();
         Role role1 = roleRepository.findById(role).orElse(null);
-        role2.setId(role1.getId());
+        role2.setId(role);
         role2.setRole(role1.getRole());
 
         person.setId(id);
