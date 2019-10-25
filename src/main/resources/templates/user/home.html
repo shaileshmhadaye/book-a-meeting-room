@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Admin Page</title>
+    <title>User Page</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -14,12 +14,40 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/logout}" method="get">
+    <form th:action="@{/logout}" method="">
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Logout
         </button>
     </form>
-    hello...
+
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span th:utext="${username}"></span>
+            </div>
+            <div class="container">
+                <h2>User Console</h2>
+                <table class="table table-hover">
+                    <tr><td>
+                        <a th:href="@{/user/book-a-meeting-room}"><button class="btn btn-md btn-block" name="book-a-meeting-room" type="Submit">Book a Meeting Room</button></a>
+                    </td></tr>
+                    <tr><td>
+                        <a th:href="@{/user/view-booking-request}"><button class="btn btn-md btn-block" name="view-booking-request" type="Submit">View Current Booking Request</button></a>
+                    </td></tr>
+                    <tr><td>
+                        <a th:href="@{/user/booking-history}"><button class="btn btn-md btn-block" name="booking-history" type="Submit">View Booking History</button></a>
+                    </td></tr>
+                    <tr><td>
+                        <a th:href="@{/user/edit-profile}"><button class="btn btn-md btn-block" name="edit-profile" type="Submit">Edit Profile</button></a>
+                    </td></tr>
+                    <tr><td>
+                        <a th:href="@{/user/change-password}"><button class="btn btn-md btn-block" name="change-password" type="Submit">Change Password</button></a>
+                    </td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

@@ -10,50 +10,82 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<form th:action="@{/login}" method="">
+    <button class="btn btn-md btn-danger btn-block" name="registration"
+            type="Submit">Go Back to Login Page
+    </button>
+</form>
 <div class="container">
-    <h2>Registration</h2>
-    <table>
-        <form  action="#" th:action="@{/register}" th:object="${person}" method="post">
-            <tr>
-                <td>First Name:</td><td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" autofocus></td>
-            </tr>
-            <tr>
-                <td>Last Name:</td><td><input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name"></td>
-            </tr>
-            <tr>
-                <td>Gender:</td><td><input type="radio" name="gender" value="male">Male  <input type="radio" name="gender" value="female">Female  <input type="radio" name="gender" value="other">Other</td>
-            </tr>
-            <tr>
-                <td>Department:</td>
-                <td>
-                    <select th:field="*{department}">
-<!--                        <option disabled>Please select...</option>-->
-                        <option value="Java" th:value="Java" th:text="Java">Java</option>
-                        <option value="iOS" th:value="iOS" th:text="iOS">iOS</option>
-                        <option value="Android" th:value="Android" th:text="Android">Android</option>
-                        <option value="testing" th:value="testing" th:text="testing">testing</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Location:</td><td><input type="text" id="location" th:field="*{location}" placeholder="Enter Your Location"></td>
-            </tr>
-            <tr>
-                <td>Email ID:</td><td><input type="email" id="email" th:field="*{email}" placeholder="Enter Email ID"></td>
-            </tr>
-            <tr>
-                <td>Password:</td><td><input type="password" id="password" th:field="*{password}" placeholder="Enter Password"></td>
-            </tr>
-            <tr>
-                <td>Status:</td><td><input type="number" id="active" th:field="*{active}" placeholder="1 if active otherwise 0"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" id="submit" value="Register"></td>
-            </tr>
+<div class="panel-group" style="margin-top:40px">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span ><h2>Registration</h2></span>
+        </div>
+            <table class="table table-hover">
+                <form  action="#" th:action="@{/register}" th:object="${person}" method="post">
+                    <tr>
+                        <td>First Name:</td><td>
+                        <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+                               class="validation-message"></label>
+                        <input type="text" id="firstName" th:field="*{firstName}"
+                                                       placeholder="Enter First Name" autofocus></td>
+                    </tr>
+                    <tr>
+                        <td>Last Name:</td><td>
+                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               class="validation-message"></label>
+                        <input type="text" id="lastName" th:field="*{lastName}"
+                                                      placeholder="Enter Last Name"></td>
+                    </tr>
+                    <tr>
+                        <td>Gender:</td><td><input type="radio" name="gender" value="male">
+                        Male  <input type="radio" name="gender" value="female">
+                        Female  <input type="radio" name="gender" value="other">Other</td>
+                    </tr>
+                    <tr>
+                        <td>Department:</td>
+                        <td>
+                            <select th:field="*{department}">
+                                <option value="null" disabled selected>Please select...</option>
+                                <option value="Java" th:value="Java" th:text="Java">Java</option>
+                                <option value="iOS" th:value="iOS" th:text="iOS">iOS</option>
+                                <option value="Android" th:value="Android" th:text="Android">Android</option>
+                                <option value="testing" th:value="testing" th:text="testing">testing</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Location:</td><td><input type="text" id="location" th:field="*{location}"
+                                                     placeholder="Enter Your Location"></td>
+                    </tr>
+                    <tr>
+                        <td>Email ID:</td><td>
+                        <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                class="validation-message"></label>
+                        <input type="email" id="email" th:field="*{email}"
+                                                     placeholder="Enter Email ID"></td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td><td>
+                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                class="validation-message"></label>
+                        <input type="password" id="password" th:field="*{password}"
+                                                     placeholder="Enter Password"></td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td><td><input type="number" id="active" th:field="*{active}"
+                                                   placeholder="1 if active otherwise 0"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button class="btn btn-mdbtn-block" value="Register"
+                                    type="Submit">Register</button></td>
+                    </tr>
 
-            <tr><td><span th:utext="${successMessage}"></span></td></tr>
-        </form>
-    </table>
+                    <tr><td><span th:utext="${successMessage}"></span></td></tr>
+                </form>
+            </table>
+        </div>
     </div>
+</div>
 </body>
 </html>

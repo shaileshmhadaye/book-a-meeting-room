@@ -34,6 +34,10 @@ public class PersonServiceImpl implements PersonService{
         return personRepository.save(person);
     }
 
+    public Person update(Person person){
+        return personRepository.save(person);
+    }
+
     public List<Person> findAll(){
         return personRepository.findAll();
     }
