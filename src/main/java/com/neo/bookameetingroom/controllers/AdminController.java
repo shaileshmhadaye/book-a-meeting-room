@@ -1,8 +1,12 @@
 package com.neo.bookameetingroom.controllers;
 
+import com.neo.bookameetingroom.model.Facility;
+import com.neo.bookameetingroom.model.MeetingRoom;
 import com.neo.bookameetingroom.model.Person;
 import com.neo.bookameetingroom.model.Role;
+import com.neo.bookameetingroom.repositories.FacilityRepository;
 import com.neo.bookameetingroom.repositories.RoleRepository;
+import com.neo.bookameetingroom.services.MeetingRoomService;
 import com.neo.bookameetingroom.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,6 +29,12 @@ public class AdminController {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private MeetingRoomService meetingRoomService;
+
+    @Autowired
+    private FacilityRepository facilityRepository;
 
     @RequestMapping(value="/home", method = RequestMethod.GET)
     public ModelAndView home(){
@@ -65,5 +77,42 @@ public class AdminController {
     public String delete(@PathVariable Long id){
         personService.deleteById(id);
         return "admin/console";
+    }
+
+    @RequestMapping(value = "/addMeetingRoom")
+    public String addMeetingRoom(Model model){
+        model.addAttribute("facilities", facilityRepository.findAll());
+        model.addAttribute("meetingRoom", new MeetingRoom());
+        return "meeting-room/add-a-meeting-room";
+    }
+
+    @PostMapping(value = "/saveMeetingRoom")
+    public String saveMeetingRoom(@ModelAttribute("meetingRoom") MeetingRoom meetingRoom,
+                                  @RequestParam("items") Long[] items){
+        if(items!=null){
+            List<Facility> facilities = new ArrayList<>();
+            Facility facility;
+            for (int i = 0; i<items.length; i++){
+                facility = facilityRepository.findById(items[i]).orElse(null);
+                if(facility != null){
+                    facilities.add(facility);
+                }
+            }
+            meetingRoom.setFacilities(facilities);
+        }
+        meetingRoomService.save(meetingRoom);
+        return "meeting-room/room-management";
+    }
+
+    @RequestMapping("/room-management")
+    public String roomManagement(Model model){
+        model.addAttribute("meetingRooms", meetingRoomService.findAll());
+        return "meeting-room/room-management";
+    }
+
+    @RequestMapping("/book-a-meeting-room/{id}")
+    public String bookAMeetingRoom(@PathVariable Long id, Model model){
+        model.addAttribute("id", id);
+        return "meeting-room/book-a-meeting-room";
     }
 }

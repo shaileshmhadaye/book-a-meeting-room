@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Add a Meeting Room</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span ><h2>Add a Meeting Room</h2></span>
+            </div>
+            <table class="table table-hover">
+<!--                <form  action="#" th:action="@{'/admin/saveMeetingRoom/'+ ${id}}" th:object="${meetingRoom}" th:method="POST">-->
+<!--                    <tr>-->
+<!--                        <td>First Name:</td><td><input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" autofocus></td>-->
+<!--                    </tr>-->
+<!--                </form>-->
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

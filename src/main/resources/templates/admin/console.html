@@ -42,8 +42,7 @@
                         <th>Department</th>
                         <th>Location</th>
                         <th>Assigned Role</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -55,8 +54,7 @@
                         <td th:text="${user.department}">testdept</td>
                         <td th:text="${user.location}">testAdmin</td>
                         <td th:text="${user.role.role}"></td>
-                        <td><a th:href="@{'/admin/edit/'+ ${user.id}}">Edit</a></td>
-                        <td><a th:href="@{'/admin/delete/'+ ${user.id}}">Delete</a></td>
+                        <td><a th:href="@{'/admin/edit/'+ ${user.id}}">Edit</a> / <a th:href="@{'/admin/delete/'+ ${user.id}}">Delete</a></td>
                     </tr>
                     </tbody>
                 </table>

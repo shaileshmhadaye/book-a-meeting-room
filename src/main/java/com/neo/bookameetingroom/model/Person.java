@@ -39,4 +39,16 @@ public class Person {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", location='" + location + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

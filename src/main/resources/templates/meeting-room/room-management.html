@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Management</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/admin/home}" method="">
+        <button class="btn btn-md btn-danger btn-block" name="admin-home"
+                type="Submit">Go Back to Admin Home page
+        </button>
+    </form>
+    <form th:action="@{/admin/addMeetingRoom}" method="">
+        <button class="btn btn-md btn-danger btn-block" name="add-a-meeting-room"
+                type="Submit">Add a Meeting Room
+        </button>
+    </form>
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span ><h2>Meeting Rooms</h2></span>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Facilities</th>
+                    <th>Book</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="meetingRoom: ${meetingRooms}">
+                    <td th:text="${meetingRoom.id}">1</td>
+                    <td th:text="${meetingRoom.description}">Test</td>
+                    <td th:text="${meetingRoom.location}">Class</td>
+                    <td th:text="${meetingRoom.facilities}">testAdmin</td>
+                    <td><a href="@{'/admin/book-a-meeting-room/'+ ${meetingRoom.id}}">Book</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
