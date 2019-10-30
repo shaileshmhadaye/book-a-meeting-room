@@ -17,7 +17,7 @@
                 <span ><h2>Add a Meeting Room</h2></span>
             </div>
             <table class="table table-hover">
-                <form  action="#" th:action="@{'/book-a-meeting-room/'+ ${id}}" th:object="${bookingDetails}" th:method="POST">
+                <form  action="#" th:action="@{'/book-a-meeting-room/'+ ${room_id} +'/' +${user_id}}" th:object="${bookingDetails}" th:method="POST">
                     <tr>
                         <td>Date:</td><td><input type="date" id="date" th:field="*{date}" autofocus></td>
                     </tr>

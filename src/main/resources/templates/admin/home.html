@@ -32,7 +32,7 @@
                         <a th:href="@{/admin/console}"><button class="btn btn-md btn-block" name="user-management" type="Submit">User Management</button></a>
                     </td></tr>
                     <tr><td>
-                        <a th:href="@{/room-management}"><button class="btn btn-md btn-block" name="room-management" type="Submit">Room Management</button></a>
+                        <a th:href="@{'/room-management/' + ${id}}"><button class="btn btn-md btn-block" name="room-management" type="Submit">Room Management</button></a>
                     </td></tr>
                     <tr><td>
                         <a th:href="@{/admin/room-allocation}"><button class="btn btn-md btn-block" name="room-allocation" type="Submit">Room Allocation</button></a>

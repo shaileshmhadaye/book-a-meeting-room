@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Setter
@@ -39,16 +40,7 @@ public class Person {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Role role;
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", department='" + department + '\'' +
-                ", location='" + location + '\'' +
-                ", role=" + role +
-                '}';
-    }
+    @OneToMany(mappedBy = "person")
+    private List<BookingDetails> bookingDetails;
+
 }

@@ -18,6 +18,7 @@ public class MeetingRoom {
     private Long id;
     private String description;
     private String location;
+    private String status;
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Facility> facilities;
 }

@@ -16,4 +16,7 @@ public class BookingDetails {
     private LocalDate date;
     @ManyToOne(cascade = CascadeType.PERSIST)
     private MeetingRoom meetingRoom;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Person person;
+    private String status;
 }

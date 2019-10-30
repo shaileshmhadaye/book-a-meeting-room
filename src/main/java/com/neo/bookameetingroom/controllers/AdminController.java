@@ -39,6 +39,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("id", user.getId());
         modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.setViewName("admin/home");
         return modelAndView;
@@ -68,13 +69,13 @@ public class AdminController {
         Role role1 = roleRepository.findById(role).orElse(null);
         person.setRole(role1);
         personService.update(person);
-        return "admin/console";
+        return "redirect:/admin/console";
     }
 
     @RequestMapping(value = "/delete/{id}")
     public String delete(@PathVariable Long id){
         personService.deleteById(id);
-        return "admin/console";
+        return "redirect:/admin/console";
     }
 
     @RequestMapping(value = "/addMeetingRoom")
@@ -98,7 +99,8 @@ public class AdminController {
             }
             meetingRoom.setFacilities(facilities);
         }
+        meetingRoom.setStatus("available");
         meetingRoomService.save(meetingRoom);
-        return "meeting-room/room-management";
+        return "redirect:/meeting-room/room-management";
     }
 }

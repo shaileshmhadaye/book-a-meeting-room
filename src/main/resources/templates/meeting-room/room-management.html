@@ -10,14 +10,19 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="container">
-    <form th:action="@{/admin/home}" method="">
+<div th:switch="${role}" class="container">
+    <form th:case="Admin" th:action="@{/admin/home}" method="">
         <button class="btn btn-md btn-danger btn-block" name="admin-home"
-                type="Submit">Go Back to Admin Home page
+                type="Submit">Go Back to Home page
         </button>
     </form>
-    <form th:action="@{/admin/addMeetingRoom}" method="">
-        <button class="btn btn-md btn-danger btn-block" name="add-a-meeting-room"
+    <form th:case="User" th:action="@{/user/home}" method="">
+        <button class="btn btn-md btn-danger btn-block" name="user-home"
+                type="Submit">Go Back to Home page
+        </button>
+    </form>
+    <form th:switch="${role}" th:action="@{/admin/addMeetingRoom}" method="">
+        <button th:case="Admin" class="btn btn-md btn-danger btn-block" name="add-a-meeting-room"
                 type="Submit">Add a Meeting Room
         </button>
     </form>
@@ -33,7 +38,8 @@
                     <th>Description</th>
                     <th>Location</th>
                     <th>Facilities</th>
-                    <th>Book</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,10 +48,16 @@
                     <td th:text="${meetingRoom.description}">Test</td>
                     <td th:text="${meetingRoom.location}">Class</td>
                     <td th:text="${meetingRoom.facilities}">testAdmin</td>
-                    <td>
-                        <form th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}" method="">
+                    <td th:text="${meetingRoom.status}"></td>
+                    <td th:switch="${role}">
+                        <form th:case="User" th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id} +'/'+ ${user_id}}" method="">
                             <button class="btn btn-md btn-danger btn-block" name="book"
                                     type="Submit">Book
+                            </button>
+                        </form>
+                        <form th:case="Admin" th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}" method="">
+                            <button class="btn btn-md btn-danger btn-block" name="addFacilities"
+                                    type="Submit">Add Facilities
                             </button>
                         </form>
                     </td>

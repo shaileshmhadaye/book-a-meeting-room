@@ -14,7 +14,7 @@
 <body>
 <div class="container">
 
-    <form th:action="@{/admin/home}" method="">
+    <form th:action="@{/user/home}" method="">
         <button class="btn btn-md btn-danger btn-block" name="registration"
                 type="Submit">Go Back to Home Page
         </button>
@@ -32,9 +32,8 @@
                         <th>ID</th>
                         <th>Date</th>
                         <th>Meeting Room</th>
-                        <th>Booked By</th>
-                        <th>status</th>
-                        <th>Action</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,9 +41,8 @@
                         <td th:text="${bookingDetail.id}">1</td>
                         <td th:text="${bookingDetail.date}">Test</td>
                         <td th:text="${bookingDetail.meetingRoom.description}">Class</td>
-                        <td th:text="${bookingDetail.person.firstName}">Test</td>
                         <td th:text="${bookingDetail.status}">Test</td>
-                        <td><a th:href="@{'/confirm-booking/'+${bookingDetail.id}}">Confirm</a> | <a th:href="@{'/cancel-booking/'+${bookingDetail.id}}">Cancel</a></td>
+                        <td><a th:href="@{'/user/delete-request/'+${bookingDetail.id}}">Delete Request</a> | <a href="@{'user/edit-request/'+${bookingDetail.id}}">Edit Request</a></td>
                     </tr>
                     </tbody>
                 </table>
