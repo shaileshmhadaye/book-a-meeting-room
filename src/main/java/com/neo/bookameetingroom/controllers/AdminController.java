@@ -1,9 +1,7 @@
 package com.neo.bookameetingroom.controllers;
 
-import com.neo.bookameetingroom.model.Facility;
-import com.neo.bookameetingroom.model.MeetingRoom;
-import com.neo.bookameetingroom.model.Person;
-import com.neo.bookameetingroom.model.Role;
+import com.neo.bookameetingroom.model.*;
+import com.neo.bookameetingroom.repositories.BookingDetailsRepository;
 import com.neo.bookameetingroom.repositories.FacilityRepository;
 import com.neo.bookameetingroom.repositories.RoleRepository;
 import com.neo.bookameetingroom.services.MeetingRoomService;
@@ -102,17 +100,5 @@ public class AdminController {
         }
         meetingRoomService.save(meetingRoom);
         return "meeting-room/room-management";
-    }
-
-    @RequestMapping("/room-management")
-    public String roomManagement(Model model){
-        model.addAttribute("meetingRooms", meetingRoomService.findAll());
-        return "meeting-room/room-management";
-    }
-
-    @RequestMapping("/book-a-meeting-room/{id}")
-    public String bookAMeetingRoom(@PathVariable Long id, Model model){
-        model.addAttribute("id", id);
-        return "meeting-room/book-a-meeting-room";
     }
 }

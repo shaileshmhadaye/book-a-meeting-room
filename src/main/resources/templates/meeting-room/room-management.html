@@ -42,7 +42,13 @@
                     <td th:text="${meetingRoom.description}">Test</td>
                     <td th:text="${meetingRoom.location}">Class</td>
                     <td th:text="${meetingRoom.facilities}">testAdmin</td>
-                    <td><a href="@{'/admin/book-a-meeting-room/'+ ${meetingRoom.id}}">Book</a></td>
+                    <td>
+                        <form th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}" method="">
+                            <button class="btn btn-md btn-danger btn-block" name="book"
+                                    type="Submit">Book
+                            </button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
