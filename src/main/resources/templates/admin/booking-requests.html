@@ -23,7 +23,35 @@
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span>Booking Requests</span>
+                <span><h2>Booking Requests</h2></span>
+                <div style="float:left;">
+                    <form th:action="@{/admin/room-allocation}" method="">
+                        <button class="btn btn-md btn-danger" name="cancelled"
+                                type="Submit">All
+                        </button>
+                    </form>
+                </div>
+                <div style="float:left;">
+                    <form th:action="@{/admin/room-allocation/pending}" method="">
+                        <button class="btn btn-md btn-danger" name="pending"
+                                type="Submit">pending
+                        </button>
+                    </form>
+                </div>
+                <div style="float:left;">
+                    <form th:action="@{/admin/room-allocation/confirmed}" method="">
+                        <button class="btn btn-md btn-danger" name="confirmed"
+                                type="Submit">confirmed
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form th:action="@{/admin/room-allocation/cancelled}" method="">
+                        <button class="btn btn-md btn-danger" name="cancelled"
+                                type="Submit">cancelled
+                        </button>
+                    </form>
+                </div>
             </div>
             <div class="container">
                 <table class="table table-hover" id="users">

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +34,17 @@ public class MeetingRoomController {
     @RequestMapping("/room-management/{user_id}")
     public String roomManagement(@PathVariable("user_id") Long id, Model model){
         Person person = personService.findById(id).orElse(null);
+        LocalDate today = LocalDate.now();
+        for (MeetingRoom meetingRoom:meetingRoomService.findAll()) {
+            for (BookingDetails bookingDetail: meetingRoom.getBookingDetails()) {
+                if(bookingDetail.getDate().isEqual(today) && bookingDetail.getStatus().equals("confirmed")){
+                    meetingRoom.setStatus("occupied");
+                }
+                else meetingRoom.setStatus("available");
+                meetingRoomService.save(meetingRoom);
+            }
+
+        }
         model.addAttribute("role", person.getRole().getRole());
         model.addAttribute("user_id", id);
         model.addAttribute("meetingRooms", meetingRoomService.findAll());
@@ -57,12 +70,50 @@ public class MeetingRoomController {
         return "meeting-room/room-management";
     }
 
+    //==================================================================================================================
+
+    @RequestMapping("/admin/room-allocation/pending")
+    public String roomAllocationPending(Model model){
+        List<BookingDetails> bookingDetails = new ArrayList<>();
+        for (BookingDetails bookingDetail: bookingDetailsRepository.findAll()) {
+            if(bookingDetail.getStatus().equals("pending")){
+                bookingDetails.add(bookingDetail);
+            }
+        }
+        model.addAttribute("bookingDetails", bookingDetails);
+        return "admin/booking-requests";
+    }
+
+    @RequestMapping("/admin/room-allocation/confirmed")
+    public String roomAllocationConfirmed(Model model){
+        List<BookingDetails> bookingDetails = new ArrayList<>();
+        for (BookingDetails bookingDetail: bookingDetailsRepository.findAll()) {
+            if(bookingDetail.getStatus().equals("confirmed")){
+                bookingDetails.add(bookingDetail);
+            }
+        }
+        model.addAttribute("bookingDetails", bookingDetails);
+        return "admin/booking-requests";
+    }
+
+    @RequestMapping("/admin/room-allocation/cancelled")
+    public String roomAllocationCancelled(Model model){
+        List<BookingDetails> bookingDetails = new ArrayList<>();
+        for (BookingDetails bookingDetail: bookingDetailsRepository.findAll()) {
+            if(bookingDetail.getStatus().equals("cancelled")){
+                bookingDetails.add(bookingDetail);
+            }
+        }
+        model.addAttribute("bookingDetails", bookingDetails);
+        return "admin/booking-requests";
+    }
+
     @RequestMapping("/admin/room-allocation")
     public String roomAllocation(Model model){
-//        List<BookingDetails> bookingDetails = bookingDetailsRepository.findAll();
         model.addAttribute("bookingDetails", bookingDetailsRepository.findAll());
         return "admin/booking-requests";
     }
+    //==================================================================================================================
 
     @RequestMapping("/confirm-booking/{book_id}")
     public String confirmBooking(@PathVariable("book_id") Long book_id){

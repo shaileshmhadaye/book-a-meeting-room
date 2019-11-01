@@ -33,7 +33,7 @@
                         <th>Date</th>
                         <th>Meeting Room</th>
                         <th>Status</th>
-                        <th>Actions</th>
+                        <th th:if="${temp} == '1'">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,7 +42,7 @@
                         <td th:text="${bookingDetail.date}">Test</td>
                         <td th:text="${bookingDetail.meetingRoom.description}">Class</td>
                         <td th:text="${bookingDetail.status}">Test</td>
-                        <td><a th:href="@{'/user/delete-request/'+${bookingDetail.id}}">Delete Request</a> | <a href="@{'user/edit-request/'+${bookingDetail.id}}">Edit Request</a></td>
+                        <td th:if="${temp} == '1'"><a th:href="@{'/user/delete-request/'+${bookingDetail.id}}">Delete Request</a></td>
                     </tr>
                     </tbody>
                 </table>

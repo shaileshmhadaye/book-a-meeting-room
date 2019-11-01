@@ -21,4 +21,7 @@ public class MeetingRoom {
     private String status;
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Facility> facilities;
+
+    @OneToMany(mappedBy = "meetingRoom")
+    private List<BookingDetails> bookingDetails;
 }

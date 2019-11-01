@@ -29,16 +29,19 @@
                 <h2>User Console</h2>
                 <table class="table table-hover">
                     <tr><td>
+                        <a th:href="@{'/user/user-profile/' + ${id}}"><button class="btn btn-md btn-block" name="user-profile" type="Submit">User Profile</button></a>
+                    </td></tr>
+                    <tr><td>
                         <a th:href="@{'/room-management/' + ${id}}"><button class="btn btn-md btn-block" name="book-a-meeting-room" type="Submit">Book a Meeting Room</button></a>
                     </td></tr>
                     <tr><td>
                         <a th:href="@{'/user/view-booking-request/' + ${id}}"><button class="btn btn-md btn-block" name="view-booking-request" type="Submit">View Current Booking Request</button></a>
                     </td></tr>
                     <tr><td>
-                        <a th:href="@{/user/booking-history}"><button class="btn btn-md btn-block" name="booking-history" type="Submit">View Booking History</button></a>
+                        <a th:href="@{'/user/booking-history/' + ${id}}"><button class="btn btn-md btn-block" name="booking-history" type="Submit">View Booking History</button></a>
                     </td></tr>
                     <tr><td>
-                        <a th:href="@{/user/edit-profile}"><button class="btn btn-md btn-block" name="edit-profile" type="Submit">Edit Profile</button></a>
+                        <a th:href="@{'/user/edit-profile/' + ${id}}"><button class="btn btn-md btn-block" name="edit-profile" type="Submit">Edit Profile</button></a>
                     </td></tr>
                     <tr><td>
                         <a th:href="@{/user/change-password}"><button class="btn btn-md btn-block" name="change-password" type="Submit">Change Password</button></a>
