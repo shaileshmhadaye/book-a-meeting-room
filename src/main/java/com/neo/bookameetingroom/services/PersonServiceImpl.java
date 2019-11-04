@@ -5,6 +5,8 @@ import com.neo.bookameetingroom.model.Role;
 import com.neo.bookameetingroom.repositories.PersonRepository;
 import com.neo.bookameetingroom.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -53,4 +55,10 @@ public class PersonServiceImpl implements PersonService{
     public Person findByEmail(String email){
         return personRepository.findByEmail(email);
     }
+
+    @Override
+    public Page<Person> getPaginatedUsers(Pageable pageable) {
+        return personRepository.findAll(pageable);
+    }
+
 }

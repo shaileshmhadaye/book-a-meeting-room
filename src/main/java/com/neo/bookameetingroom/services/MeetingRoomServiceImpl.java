@@ -2,6 +2,8 @@ package com.neo.bookameetingroom.services;
 
 import com.neo.bookameetingroom.model.MeetingRoom;
 import com.neo.bookameetingroom.repositories.MeetingRoomRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,10 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
     @Override
     public List<MeetingRoom> findAll() {
         return meetingRoomRepository.findAll();
+    }
+
+    @Override
+    public Page<MeetingRoom> getPaginatedMeetingRooms(Pageable pageable) {
+        return meetingRoomRepository.findAll(pageable);
     }
 }

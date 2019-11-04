@@ -4,6 +4,8 @@ import com.neo.bookameetingroom.model.Person;
 import com.neo.bookameetingroom.services.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +61,17 @@ public class IndexController {
     public String accessDenied(){
         return "access-denied";
     }
+
+    @RequestMapping(value="/homepage", method = RequestMethod.GET)
+    public ModelAndView home(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("role", user.getRole().getRole());
+        modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.setViewName("homepage");
+        return modelAndView;
+    }
+
 
 }

@@ -7,6 +7,9 @@ import com.neo.bookameetingroom.repositories.RoleRepository;
 import com.neo.bookameetingroom.services.MeetingRoomService;
 import com.neo.bookameetingroom.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,13 +50,24 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/console", method = RequestMethod.GET)
-    public ModelAndView console(){
+    @RequestMapping(value="/console/{page}", method = RequestMethod.GET)
+    public ModelAndView console(@PathVariable(value = "page") int page,
+                                @RequestParam(defaultValue = "id") String sortBy){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
+
+        PageRequest pageable = PageRequest.of(page - 1, 3, Sort.Direction.DESC, sortBy);
+        Page<Person> userPage = personService.getPaginatedUsers(pageable);
+        int totalPages = userPage.getTotalPages();
+        if(totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
+            modelAndView.addObject("pageNumbers", pageNumbers);
+        }
+        modelAndView.addObject("activeUserList", true);
+        modelAndView.addObject("users", userPage.getContent());
+
         modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("users", personService.findAll());
         modelAndView.setViewName("admin/console");
         return modelAndView;
     }

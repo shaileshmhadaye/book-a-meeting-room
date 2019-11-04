@@ -90,15 +90,16 @@ public class UserController {
         return "user/user-profile";
     }
 
-    @RequestMapping("/edit-profile/{user_id}")
-    public String editProfile(@PathVariable("user_id") Long id, Model model){
-        Person person = personService.findById(id).orElse(null);
-        model.addAttribute("user", person);
+    @RequestMapping("/edit-profile")
+    public String editProfile( Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        model.addAttribute("user", user);
         return "user/edit-profile";
     }
 
-    @PutMapping("/edit-profile/{user_id}")
-    public String saveProfile(@PathVariable("user_id") Long id, @Valid Person person){
+    @PutMapping("/edit-profile")
+    public String saveProfile(@Valid Person person){
         personService.save(person);
         return "user/user-profile";
     }

@@ -2,71 +2,94 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Room Management</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div th:switch="${role}" class="container">
-    <form th:case="Admin" th:action="@{/admin/home}" method="">
-        <button class="btn btn-md btn-danger btn-block" name="admin-home"
-                type="Submit">Go Back to Home page
-        </button>
-    </form>
-    <form th:case="User" th:action="@{/user/home}" method="">
-        <button class="btn btn-md btn-danger btn-block" name="user-home"
-                type="Submit">Go Back to Home page
-        </button>
-    </form>
-    <form th:switch="${role}" th:action="@{/admin/addMeetingRoom}" method="">
-        <button th:case="Admin" class="btn btn-md btn-danger btn-block" name="add-a-meeting-room"
-                type="Submit">Add a Meeting Room
-        </button>
-    </form>
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span ><h2>Meeting Rooms</h2></span>
+
+<div th:switch="${role}">
+    <div th:case="Admin">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/admin/console/1">Users</a></li>
+                    <li class="active"><a href="/room-management/1">Rooms</a></li>
+                    <li><a href="/admin/room-allocation/1">Bookings</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
             </div>
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Description</th>
-                    <th>Location</th>
-                    <th>Facilities</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="meetingRoom: ${meetingRooms}">
-                    <td th:text="${meetingRoom.id}">1</td>
-                    <td th:text="${meetingRoom.description}">Test</td>
-                    <td th:text="${meetingRoom.location}">Class</td>
-                    <td th:text="${meetingRoom.facilities}">testAdmin</td>
-                    <td th:text="${meetingRoom.status}"></td>
-                    <td th:switch="${role}">
-                        <form th:case="User" th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id} +'/'+ ${user_id}}" method="">
-                            <button class="btn btn-md btn-danger btn-block" name="book"
-                                    type="Submit">Book
-                            </button>
-                        </form>
-                        <form th:case="Admin" th:action="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}" method="">
-                            <button class="btn btn-md btn-danger btn-block" name="addFacilities"
-                                    type="Submit">Add Facilities
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        </nav>
+        <div class="container">
+            <div class="panel-group" style="margin-top:40px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3> Meeting Rooms </h3>
+                        <div style="float:right;">
+                            <form th:action="@{/admin/addMeetingRoom/}" method="get">
+                                <button class="button2" name="add-room"
+                                        type="Submit">Add</button>
+                            </form>
+                        </div>
+                        <span th:utext="${username}">user</span>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Location</th>
+                                <th>Facilities</th>
+                                <th>Status</th>
+                                <th colspan="2">Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="meetingRoom: ${meetingRooms}">
+                                <td th:text="${meetingRoom.id}">1</td>
+                                <td th:text="${meetingRoom.description}">Test</td>
+                                <td th:text="${meetingRoom.location}">Class</td>
+                                <td th:text="${meetingRoom.facilities}">testAdmin</td>
+                                <td th:text="${meetingRoom.status}"></td>
+                                <td>
+                                    <a th:href="@{'/update-a-meeting-room/'+ ${meetingRoom.id}}"
+                                        class="btn btn-primary">Edit
+                                    </a>
+                                    <a th:href="@{'/delete-a-meeting-room/'+ ${meetingRoom.id}}"
+                                       class="btn btn-danger">Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+        <div class="row" th:fragment="pagination">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                            <a class="page-link" th:href="@{|/room-management/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
 
 </body>
 </html>

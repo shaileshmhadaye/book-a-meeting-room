@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:switch="${role}">
+        <div th:case="Admin">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Book A MeetingRoom</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="/admin/console/1">Users</a></li>
+                        <li><a href="/room-management/1">Rooms</a></li>
+                        <li><a href="/admin/room-allocation/1">Bookings</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="panel-group" style="margin-top:40px">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4>Admin Console</h4>
+                        </div>
+                        <div class="panel-body">
+                            <span th:utext="${username}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:case="User">
+            <div class="container">
+                <div class="panel-group" style="margin-top:40px">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h4>User Console</h4>
+                            <span th:utext="${userName}"></span>
+                            <div style="float:right;">
+                                <form th:action="@{/logout}" method="get">
+                                    <button class="button2" name="logout"
+                                            type="Submit">Logout</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr><td>
+                                    <form th:action="@{/user/user-profile}" method="get">
+                                        <button class="button2" type="submit">User Profile</button>
+                                    </form>
+                                </td></tr>
+                                <tr><td>
+                                    <form th:action="@{/meeting-room-details}" method="get">
+                                        <button class="button2" type="submit">Meeting Room Details</button>
+                                    </form>
+                                </td></tr>
+                                <tr><td>
+                                    <form th:action="@{/user/view-booking-status}" method="get">
+                                        <button class="button2" type="submit">View Booking Status</button>
+                                    </form>
+                                </td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p th:case="*">User is some other thing</p>
+    </div>
+</body>
+</html>

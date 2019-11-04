@@ -3,83 +3,89 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Room Allocation</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <title>Admin Page</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="/admin/console/1">Users</a></li>
+            <li><a href="/room-management/1">Rooms</a></li>
+            <li class="active"><a href="/admin/room-allocation/1">Bookings</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="container">
-
-    <form th:action="@{/admin/home}" method="">
-        <button class="btn btn-md btn-danger btn-block" name="registration"
-                type="Submit">Go Back to Home Page
-        </button>
-    </form>
-
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span><h2>Booking Requests</h2></span>
-                <div style="float:left;">
-                    <form th:action="@{/admin/room-allocation}" method="">
-                        <button class="btn btn-md btn-danger" name="cancelled"
-                                type="Submit">All
-                        </button>
-                    </form>
-                </div>
-                <div style="float:left;">
-                    <form th:action="@{/admin/room-allocation/pending}" method="">
-                        <button class="btn btn-md btn-danger" name="pending"
-                                type="Submit">pending
-                        </button>
-                    </form>
-                </div>
-                <div style="float:left;">
-                    <form th:action="@{/admin/room-allocation/confirmed}" method="">
-                        <button class="btn btn-md btn-danger" name="confirmed"
-                                type="Submit">confirmed
-                        </button>
-                    </form>
-                </div>
-                <div>
-                    <form th:action="@{/admin/room-allocation/cancelled}" method="">
-                        <button class="btn btn-md btn-danger" name="cancelled"
-                                type="Submit">cancelled
-                        </button>
-                    </form>
-                </div>
+                <h3>Booking Requests</h3>
+                <span th:utext="${username}"></span>
             </div>
-            <div class="container">
-                <table class="table table-hover" id="users">
+            <div class="panel-body">
+                <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Name</th>
                         <th>Date</th>
-                        <th>Meeting Room</th>
+                        <th>Status</th>
                         <th>Booked By</th>
-                        <th>status</th>
-                        <th>Action</th>
+                        <th></th>
+                        <th colspan="2">Operations</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="bookingDetail: ${bookingDetails}">
-                        <td th:text="${bookingDetail.id}">1</td>
-                        <td th:text="${bookingDetail.date}">Test</td>
-                        <td th:text="${bookingDetail.meetingRoom.description}">Class</td>
-                        <td th:text="${bookingDetail.person.firstName}">Test</td>
-                        <td th:text="${bookingDetail.status}">Test</td>
-                        <td><a th:href="@{'/confirm-booking/'+${bookingDetail.id}}">Confirm</a> | <a th:href="@{'/cancel-booking/'+${bookingDetail.id}}">Cancel</a></td>
+                    <tr th:each="booking: ${bookingDetails}">
+                        <td th:text="${booking.id}">1</td>
+                        <td th:text="${booking.meetingRoom.description}">Test</td>
+                        <td th:text="${booking.date}">Class</td>
+                        <td th:text="${booking.status}">male</td>
+                        <td th:text="${booking.Person.firstName}">test@example.com</td>
+                        <td th:if="${booking.status} == 'pending'">
+                            <form th:action="@{/admin/confirmRequest/{id}(id=${booking.id})}" method="post">
+                                <button class="btn btn-primary" name="confirm"
+                                        type="Submit">Confirm</button>
+                            </form>
+                        </td>
+                        <td th:if="${booking.status} == 'pending' or ${booking.status} == 'confirmed'">
+                            <form th:action="@{/admin/cancelRequest/{id}(id=${booking.id})}" method="post">
+                                <button class="btn btn-danger" name="confirm"
+                                        type="Submit">Reject</button>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            <span class="text-center" th:utext="${successMessage}"></span>
         </div>
     </div>
 </div>
-
+<div class="row" th:fragment="pagination">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <nav aria-label="Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >
+                    <a class="page-link" th:href="@{|/admin/room-allocation/${pageNumber}|}" th:text=${pageNumber}>1</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2"></div>
+</div>
 </body>
 </html>
