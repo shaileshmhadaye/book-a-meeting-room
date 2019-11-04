@@ -41,9 +41,8 @@ public class MeetingRoomController {
                     meetingRoom.setStatus("occupied");
                 }
                 else meetingRoom.setStatus("available");
-                meetingRoomService.save(meetingRoom);
             }
-
+            meetingRoomService.save(meetingRoom);
         }
         model.addAttribute("role", person.getRole().getRole());
         model.addAttribute("user_id", id);

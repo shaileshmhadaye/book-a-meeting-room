@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+
+        <form th:action="@{/logout}" method="">
+            <button class="btn btn-md btn-danger btn-block" name="registration"
+                    type="Submit">Logout
+            </button>
+        </form>
+        <form th:action="@{/user/home}" method="">
+            <button class="btn btn-md btn-danger btn-block" name="registration"
+                    type="Submit">Go Back to Home Page
+            </button>
+        </form>
+
+        <div class="panel-group" style="margin-top:40px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span>User Profile</span>
+                </div>
+                <div class="container">
+                    <table class="table table-hover">
+                        <tr>
+                            <td>ID:</td><td th:text="${user.id}"></td>
+                        </tr>
+                        <tr>
+                            <td>First Name:</td><td th:text="${user.firstName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name:</td><td th:text="${user.lastName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email ID:</td><td th:text="${user.email}"></td>
+                        </tr>
+                        <tr>
+                            <td>Department:</td><td th:text="${user.department}"></td>
+                        </tr>
+                        <tr>
+                            <td>Location</td><td th:text="${user.location}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{'/user/edit-profile/' + ${id}}" method="put">
+            <button class="btn btn-md btn-danger btn-block" name="edit-profile"
+                    type="Submit">Edit Profile
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>

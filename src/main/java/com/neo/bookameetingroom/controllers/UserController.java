@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,8 +46,9 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         Person user = personService.findById(id).orElse(null);
         List<BookingDetails> bookingDetails = new ArrayList<>();
+        LocalDate today = LocalDate.now();
         for (BookingDetails bookingDetail: user.getBookingDetails()) {
-            if(bookingDetail.getStatus().equals("pending") || bookingDetail.getStatus().equals("confirmed")){
+            if(bookingDetail.getDate().isAfter(today) || bookingDetail.getDate().isEqual(today)){
                 bookingDetails.add(bookingDetail);
             }
         }
@@ -79,5 +81,25 @@ public class UserController {
         bookingDetailsRepository.deleteById(id);
         modelAndView.setViewName("user/booking-requests");
         return modelAndView;
+    }
+
+    @RequestMapping("/user-profile/{user_id}")
+    public String userProfile(@PathVariable("user_id") Long id, Model model){
+        Person person = personService.findById(id).orElse(null);
+        model.addAttribute("user", person);
+        return "user/user-profile";
+    }
+
+    @RequestMapping("/edit-profile/{user_id}")
+    public String editProfile(@PathVariable("user_id") Long id, Model model){
+        Person person = personService.findById(id).orElse(null);
+        model.addAttribute("user", person);
+        return "user/edit-profile";
+    }
+
+    @PutMapping("/edit-profile/{user_id}")
+    public String saveProfile(@PathVariable("user_id") Long id, @Valid Person person){
+        personService.save(person);
+        return "user/user-profile";
     }
 }
