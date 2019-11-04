@@ -30,21 +30,11 @@ public class UserController {
         this.personService = personService;
     }
 
-    @RequestMapping(value="/home", method = RequestMethod.GET)
-    public ModelAndView userHome(){
+    @RequestMapping(value="/view-booking-request", method = RequestMethod.GET)
+    public ModelAndView ViewBookingRequest(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
-        modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("id", user.getId());
-        modelAndView.setViewName("user/home");
-        return modelAndView;
-    }
-
-    @RequestMapping(value="/view-booking-request/{user_id}", method = RequestMethod.GET)
-    public ModelAndView ViewBookingRequest(@PathVariable("user_id") Long id){
-        ModelAndView modelAndView = new ModelAndView();
-        Person user = personService.findById(id).orElse(null);
         List<BookingDetails> bookingDetails = new ArrayList<>();
         LocalDate today = LocalDate.now();
         for (BookingDetails bookingDetail: user.getBookingDetails()) {

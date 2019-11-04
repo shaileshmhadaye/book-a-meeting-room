@@ -11,5 +11,6 @@ public interface MeetingRoomService {
     MeetingRoom save(MeetingRoom meetingRoom);
     Optional<MeetingRoom> findById(Long id);
     List<MeetingRoom> findAll();
+    void deleteById(Long id);
     Page<MeetingRoom> getPaginatedMeetingRooms(Pageable pageable);
 }

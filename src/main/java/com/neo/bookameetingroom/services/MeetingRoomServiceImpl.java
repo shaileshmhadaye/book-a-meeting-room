@@ -33,6 +33,10 @@ public class MeetingRoomServiceImpl implements MeetingRoomService{
         return meetingRoomRepository.findAll();
     }
 
+    public void deleteById(Long id){
+        meetingRoomRepository.deleteById(id);
+    }
+
     @Override
     public Page<MeetingRoom> getPaginatedMeetingRooms(Pageable pageable) {
         return meetingRoomRepository.findAll(pageable);

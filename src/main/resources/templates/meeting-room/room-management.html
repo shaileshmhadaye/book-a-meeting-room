@@ -61,10 +61,10 @@
                                 <td th:text="${meetingRoom.facilities}">testAdmin</td>
                                 <td th:text="${meetingRoom.status}"></td>
                                 <td>
-                                    <a th:href="@{'/update-a-meeting-room/'+ ${meetingRoom.id}}"
+                                    <a th:href="@{'/admin/update-meeting-room/'+ ${meetingRoom.id}}"
                                         class="btn btn-primary">Edit
                                     </a>
-                                    <a th:href="@{'/delete-a-meeting-room/'+ ${meetingRoom.id}}"
+                                    <a th:href="@{'/admin/delete-meeting-room/'+ ${meetingRoom.id}}"
                                        class="btn btn-danger">Delete
                                     </a>
                                 </td>
