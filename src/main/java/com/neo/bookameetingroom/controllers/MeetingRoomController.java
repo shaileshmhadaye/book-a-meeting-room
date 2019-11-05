@@ -151,7 +151,7 @@ public class MeetingRoomController {
         bookingDetails.setStatus("confirmed");
         meetingRoomService.save(meetingRoom);
         bookingService.save(bookingDetails);
-        return "admin/booking-requests";
+        return "redirect:/admin/room-allocation/1";
     }
 
     @RequestMapping("/cancel-booking/{book_id}")
@@ -159,6 +159,6 @@ public class MeetingRoomController {
         BookingDetails bookingDetails = bookingService.findById(book_id).orElse(null);
         bookingDetails.setStatus("cancelled");
         bookingService.save(bookingDetails);
-        return "admin/booking-requests";
+        return "redirect:/admin/room-allocation/1";
     }
 }

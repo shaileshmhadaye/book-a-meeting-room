@@ -11,39 +11,40 @@
 </head>
 
 <body>
-<div class="container-fluid">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">Book A MeetingRoom</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="/user/user-profile">Profile</a></li>
-        <li class="active"><a href="/room-management/1">Book A Room</a></li>
-        <li><a href="/user/view-booking-request/">Bookings</a></li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-    </ul>
-</div>
-</nav>
-<div class="container">
-    <div class="panel-group" style="margin-top:40px">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <span ><h2>Add a Meeting Room</h2></span>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Book A MeetingRoom</a>
             </div>
-            <table class="table table-hover">
-                <form  action="#" th:action="@{'/book-a-meeting-room/'+ ${room_id}}" th:object="${bookingDetails}" th:method="POST">
-                    <tr>
-                        <td>Date:</td><td><input type="date" id="date" th:field="*{date}" autofocus></td>
-                    </tr>
-                    <tr>
-                        <td><input class="button2" type="submit" id="submit" value="Book"></td>
-                    </tr>
-                </form>
-            </table>
+            <ul class="nav navbar-nav">
+                <li><a href="/user/user-profile">Profile</a></li>
+                <li class="active"><a href="/room-management/1">Book A Room</a></li>
+                <li><a href="/user/view-booking-request/">Bookings</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="panel-group" style="margin-top:40px">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span ><h3>Book a Meeting Room</h3></span>
+                </div>
+                <table class="table table-hover">
+                    <form  action="#" th:action="@{'/book-a-meeting-room/'+ ${room_id}}" th:object="${bookingDetails}" th:method="POST">
+                        <tr>
+                            <td>Date:</td><td><input type="date" id="date" th:field="*{date}" autofocus></td>
+                        </tr>
+                        <tr>
+                            <td><input class="button2" type="submit" id="submit" value="Book"></td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 </html>
