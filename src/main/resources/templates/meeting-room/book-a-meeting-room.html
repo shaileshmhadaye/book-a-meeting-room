@@ -2,14 +2,29 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Add a Meeting Room</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
+    <title>Book a Meeting Room</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
+<div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">Book A MeetingRoom</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a href="/user/user-profile">Profile</a></li>
+        <li class="active"><a href="/room-management/1">Book A Room</a></li>
+        <li><a href="/user/view-booking-request/">Bookings</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+    </ul>
+</div>
+</nav>
 <div class="container">
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
@@ -22,7 +37,7 @@
                         <td>Date:</td><td><input type="date" id="date" th:field="*{date}" autofocus></td>
                     </tr>
                     <tr>
-                        <td><input type="submit" id="submit" value="Book"></td>
+                        <td><input class="button2" type="submit" id="submit" value="Book"></td>
                     </tr>
                 </form>
             </table>

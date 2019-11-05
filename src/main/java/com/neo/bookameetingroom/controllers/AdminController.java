@@ -13,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -119,10 +120,11 @@ public class AdminController {
         return modelAndView;
     }
 
-    @PutMapping("/update-meeting-room/{room_id}")
-    public ModelAndView editUser(@PathVariable(value="room_id") Long id,
-                                 @Valid MeetingRoom meetingRoomData,
+    @RequestMapping(value = "/update-meeting-room/{room_id}", method = RequestMethod.PUT)
+    public ModelAndView saveRoom(@PathVariable(value="room_id") Long id,
+                                 @Valid @ModelAttribute("meetingRoom") MeetingRoom meetingRoomData,
                                  @RequestParam("items") Long[] items) {
+        MeetingRoom meetingRoom = meetingRoomService.findById(id).orElse(null);
         ModelAndView modelAndView = new ModelAndView();
         if(items!=null){
             List<Facility> facilities = new ArrayList<>();
@@ -133,21 +135,50 @@ public class AdminController {
                     facilities.add(facility);
                 }
             }
-            meetingRoomData.setFacilities(facilities);
+            meetingRoom.setFacilities(facilities);
         }
-        meetingRoomData.setStatus(meetingRoomService.findById(id).orElse(null).getStatus());
-        meetingRoomService.save(meetingRoomData);
+        meetingRoom.setDescription(meetingRoomData.getDescription());
+        meetingRoom.setLocation(meetingRoomData.getLocation());
+        meetingRoomService.save(meetingRoom);
         modelAndView.addObject("successMessage", "MeetingRoom has been Updated successfully");
         modelAndView.addObject("meetingRoom", meetingRoomData);
         modelAndView.setViewName("redirect:/room-management/1");
         return modelAndView;
     }
 
-    @DeleteMapping("/delete-meeting-room/{room_id}")
+    @RequestMapping("/delete-meeting-room/{room_id}")
     public ModelAndView deleteRoom(@PathVariable("room_id") Long id){
         ModelAndView modelAndView = new ModelAndView();
         meetingRoomService.deleteById(id);
         modelAndView.setViewName("redirect:/room-management/1");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-user", method = RequestMethod.GET)
+    public ModelAndView register(){
+        ModelAndView modelAndView = new ModelAndView();
+        Person person = new Person();
+        modelAndView.addObject("person", person);
+        modelAndView.setViewName("admin/add-user");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/add-user", method = RequestMethod.POST)
+    public ModelAndView createNewUser(@Valid Person person, BindingResult bindingResult){
+        ModelAndView modelAndView = new ModelAndView();
+        Person person1 = personService.findByEmail(person.getEmail());
+        if (person1 != null){
+            bindingResult
+                    .rejectValue("email", "error.person",
+                            "There is already a user registered with the email provided");
+
+        }
+        if (bindingResult.hasErrors()){
+            modelAndView.setViewName("admin/add-user");
+        }else {
+            personService.save(person);
+            modelAndView.setViewName("redirect:/admin/console/1");
+        }
         return modelAndView;
     }
 }

@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Page</title>
+    <title>User Booking Requests</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
@@ -17,9 +17,9 @@
             <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="#">Users</a></li>
-            <li><a href="#">Rooms</a></li>
-            <li class="active"><a href="/user/view-booking-request">Bookings</a></li>
+            <li><a href="/user/user-profile">Profile</a></li>
+            <li><a href="/room-management/1">Book A Room</a></li>
+            <li class="active"><a href="/user/view-booking-request/">Bookings</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
@@ -30,7 +30,8 @@
     <div class="panel-group" style="margin-top:40px">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <span>Booking Requests</span>
+                <h3>Booking Requests</h3>
+                <span th:utext="${username}"></span>
             </div>
             <div class="container">
                 <table class="table table-hover" id="users">

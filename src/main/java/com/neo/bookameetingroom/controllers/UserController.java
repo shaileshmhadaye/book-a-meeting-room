@@ -42,6 +42,7 @@ public class UserController {
                 bookingDetails.add(bookingDetail);
             }
         }
+        modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("temp", "1");
         modelAndView.addObject("bookingDetails", bookingDetails);
         modelAndView.setViewName("user/booking-requests");
@@ -73,9 +74,10 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping("/user-profile/{user_id}")
-    public String userProfile(@PathVariable("user_id") Long id, Model model){
-        Person person = personService.findById(id).orElse(null);
+    @RequestMapping("/user-profile")
+    public String userProfile(Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person person = personService.findByEmail(auth.getName());
         model.addAttribute("user", person);
         return "user/user-profile";
     }
@@ -89,8 +91,12 @@ public class UserController {
     }
 
     @PutMapping("/edit-profile")
-    public String saveProfile(@Valid Person person){
-        personService.save(person);
-        return "user/user-profile";
+    public String saveProfile(Person person){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        user.setFirstName(person.getFirstName());
+        user.setLastName(person.getLastName());
+        personService.save(user);
+        return "redirect:/user/user-profile";
     }
 }

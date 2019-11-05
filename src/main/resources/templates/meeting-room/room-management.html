@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Admin Page</title>
+    <title>Meeting Rooms</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
@@ -10,10 +10,7 @@
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<div th:switch="${role}">
-    <div th:case="Admin">
-        <nav class="navbar navbar-inverse">
+        <nav th:if="${role} == 'Admin'" class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
@@ -28,13 +25,28 @@
                 </ul>
             </div>
         </nav>
+        <nav th:if="${role} == 'User'" class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="/user/user-profile">Profile</a></li>
+                    <li class="active"><a href="/room-management/1">Book A Room</a></li>
+                    <li><a href="/user/view-booking-request/">Bookings</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                </ul>
+            </div>
+        </nav>
         <div class="container">
             <div class="panel-group" style="margin-top:40px">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3> Meeting Rooms </h3>
                         <div style="float:right;">
-                            <form th:action="@{/admin/addMeetingRoom/}" method="get">
+                            <form th:if="${role} == 'Admin'" th:action="@{/admin/addMeetingRoom/}" method="get">
                                 <button class="button2" name="add-room"
                                         type="Submit">Add</button>
                             </form>
@@ -60,12 +72,17 @@
                                 <td th:text="${meetingRoom.location}">Class</td>
                                 <td th:text="${meetingRoom.facilities}">testAdmin</td>
                                 <td th:text="${meetingRoom.status}"></td>
-                                <td>
+                                <td th:if="${role} == 'Admin'">
                                     <a th:href="@{'/admin/update-meeting-room/'+ ${meetingRoom.id}}"
                                         class="btn btn-primary">Edit
                                     </a>
                                     <a th:href="@{'/admin/delete-meeting-room/'+ ${meetingRoom.id}}"
                                        class="btn btn-danger">Delete
+                                    </a>
+                                </td>
+                                <td th:if="${role} == 'User'">
+                                    <a th:href="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}"
+                                       class="btn btn-primary">Book
                                     </a>
                                 </td>
                             </tr>
@@ -75,8 +92,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
         <div class="row" th:fragment="pagination">
             <div class="col-md-2"></div>
             <div class="col-md-8">

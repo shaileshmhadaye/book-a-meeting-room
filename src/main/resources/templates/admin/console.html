@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Page</title>
+    <title>User List</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
@@ -33,7 +33,7 @@
                 <h3>Users</h3>
                 <span th:utext="${username}"></span>
                 <div style="float:right;">
-                    <form th:action="@{/register}" method="get">
+                    <form th:action="@{/admin/add-user}" method="get">
                         <button class="button2" name="registration"
                                 type="Submit">Add</button>
                     </form>
