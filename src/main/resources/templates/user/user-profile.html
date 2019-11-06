@@ -18,9 +18,11 @@
             <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/user/user-profile">Profile</a></li>
-            <li><a href="/room-management/1">Book A Room</a></li>
-            <li><a href="/user/view-booking-request/">Bookings</a></li>
+            <li th:if="${role} == 'Admin'"><a href="/admin/console/1">Users</a></li>
+            <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
+            <li><a href="/room-management/1">Rooms</a></li>
+            <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/1">Bookings</a></li>
+            <li th:if="${role} == 'Admin'"><a href="/admin/room-allocation/1">Bookings</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

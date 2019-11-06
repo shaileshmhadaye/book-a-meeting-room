@@ -1,6 +1,7 @@
 package com.neo.bookameetingroom.services;
 
 import com.neo.bookameetingroom.model.BookingDetails;
+import com.neo.bookameetingroom.model.Person;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,4 +14,5 @@ public interface BookingService {
     Optional<BookingDetails> findById(Long id);
     void deleteById(Long id);
     Page<BookingDetails> getPaginatedBookingDetails(Pageable pageable);
+    Page<BookingDetails> getPaginatedBookingDetails(Person person, Pageable pageable);
 }

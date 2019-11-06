@@ -10,36 +10,23 @@
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-        <nav th:if="${role} == 'Admin'" class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/admin/console/1">Users</a></li>
-                    <li class="active"><a href="/room-management/1">Rooms</a></li>
-                    <li><a href="/admin/room-allocation/1">Bookings</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                </ul>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Book A MeetingRoom</a>
             </div>
-        </nav>
-        <nav th:if="${role} == 'User'" class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/user/user-profile">Profile</a></li>
-                    <li class="active"><a href="/room-management/1">Book A Room</a></li>
-                    <li><a href="/user/view-booking-request/">Bookings</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
-                </ul>
-            </div>
-        </nav>
+            <ul class="nav navbar-nav">
+                <li th:if="${role} == 'Admin'"><a href="/admin/console/1">Users</a></li>
+                <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
+                <li class="active"><a href="/room-management/1">Rooms</a></li>
+                <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/1">Bookings</a></li>
+                <li th:if="${role} == 'Admin'"><a href="/admin/room-allocation/1">Bookings</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
         <div class="container">
             <div class="panel-group" style="margin-top:40px">
                 <div class="panel panel-primary">
@@ -80,7 +67,7 @@
                                        class="btn btn-danger">Delete
                                     </a>
                                 </td>
-                                <td th:if="${role} == 'User'">
+                                <td th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'">
                                     <a th:href="@{'/book-a-meeting-room/'+ ${meetingRoom.id}}"
                                        class="btn btn-primary">Book
                                     </a>

@@ -56,13 +56,15 @@
                     </tr>
                     <tr>
                         <td>Location:</td>
-                        <select th:field="*{location}">
-                            <option value="null" disabled selected>Please select...</option>
-                            <option value="Parel" th:value="Parel" th:text="Parel">Parel</option>
-                            <option value="Rabale" th:value="Rabale" th:text="Rabale">Rabale</option>
-                            <option value="Pune" th:value="Pune" th:text="Pune">Pune</option>
-                            <option value="Dadar" th:value="Dadar" th:text="Dadar">Dadar</option>
-                        </select>
+                        <td>
+                            <select th:field="*{location}">
+                                <option value="null" disabled selected>Please select...</option>
+                                <option value="Parel" th:value="Parel" th:text="Parel">Parel</option>
+                                <option value="Rabale" th:value="Rabale" th:text="Rabale">Rabale</option>
+                                <option value="Pune" th:value="Pune" th:text="Pune">Pune</option>
+                                <option value="Dadar" th:value="Dadar" th:text="Dadar">Dadar</option>
+                            </select>
+                        </td>
                     <tr>
                         <td>Email ID:</td><td>
                         <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"

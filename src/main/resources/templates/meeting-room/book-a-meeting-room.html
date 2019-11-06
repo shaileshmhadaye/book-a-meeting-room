@@ -17,9 +17,9 @@
                 <a class="navbar-brand" href="#">Book A MeetingRoom</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="/user/user-profile">Profile</a></li>
-                <li class="active"><a href="/room-management/1">Book A Room</a></li>
-                <li><a href="/user/view-booking-request/">Bookings</a></li>
+                <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
+                <li class="active"><a href="/room-management/1">Rooms</a></li>
+                <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/">Bookings</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>

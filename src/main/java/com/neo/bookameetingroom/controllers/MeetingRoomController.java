@@ -67,6 +67,9 @@ public class MeetingRoomController {
 
     @RequestMapping(value = "/book-a-meeting-room/{room_id}", method = RequestMethod.GET)
     public String bookAMeetingRoom(@PathVariable("room_id") Long id, Model model){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person person = personService.findByEmail(auth.getName());
+        model.addAttribute("role", person.getRole().getRole());
         model.addAttribute("bookingDetails", new BookingDetails());
         model.addAttribute("room_id", id);
         return "meeting-room/book-a-meeting-room";
