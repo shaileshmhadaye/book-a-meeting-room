@@ -19,7 +19,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li th:if="${role} == 'Admin'"><a href="/admin/console/1">Users</a></li>
-            <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
+            <li class="active" th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
             <li><a href="/room-management/1">Rooms</a></li>
             <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/1">Bookings</a></li>
             <li th:if="${role} == 'Admin'"><a href="/admin/room-allocation/1">Bookings</a></li>
