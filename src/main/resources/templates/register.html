@@ -10,12 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form th:action="@{/login}" method="">
-    <button class="btn btn-md btn-danger btn-block" name="registration"
-            type="Submit">Go Back to Login Page
-    </button>
-</form>
-<div class="container">
+<div class="container" style="width:700px;">
 <div class="panel-group" style="margin-top:40px">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -84,10 +79,12 @@
                                                    placeholder="1 if active otherwise 0"></td>
                     </tr>
                     <tr>
-                        <td colspan="2"><button class="btn btn-mdbtn-block" value="Register"
+                        <td><button class="btn btn-lg btn-primary btn-block" value="Register"
                                     type="Submit">Register</button></td>
                     </tr>
-
+                    <tr>
+                        <td><a href="/login"><button class="btn btn-lg btn-primary btn-block">Login</button></a></td>
+                    </tr>
                     <tr><td><span th:utext="${successMessage}"></span></td></tr>
                 </form>
             </table>

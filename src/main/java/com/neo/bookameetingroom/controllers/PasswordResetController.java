@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 public class PasswordResetController {
@@ -55,6 +56,7 @@ public class PasswordResetController {
         if(token1 != null){
             Person person = token1.getPerson();
             modelAndView.addObject("user", person);
+            modelAndView.addObject("token", token);
         }else {
             modelAndView.addObject("errorMessage", "Oops!  This is an invalid password reset link.");
         }
@@ -62,9 +64,12 @@ public class PasswordResetController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
-    public ModelAndView resetPasswordConfirmed(ModelAndView modelAndView, Person person){
-        if(person.getEmail() != null){
+    @RequestMapping(value = "/reset-password/{token}", method = RequestMethod.POST)
+    public ModelAndView resetPasswordConfirmed(ModelAndView modelAndView, @PathVariable("token") String token, @ModelAttribute("user") Person person){
+        Token token1 = tokenService.findByToken(token);
+        if(person.getEmail() != null && token1 != null){
+            token1.setToken(UUID.randomUUID().toString());
+            tokenService.save(token1);
             Person user = personService.findByEmail(person.getEmail());
             user.setPassword(person.getPassword());
             personService.update(user);
