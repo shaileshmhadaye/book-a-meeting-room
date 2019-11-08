@@ -60,8 +60,27 @@ public class MeetingRoomController {
             List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("bookingDetails", new BookingDetails());
         model.addAttribute("activeRoomsList", true);
         model.addAttribute("meetingRooms", meetingRoomPage.getContent());
+        return "meeting-room/room-management";
+    }
+
+    @RequestMapping("/filter-room-with-date")
+    public String filterRoom(Model model, BookingDetails bookingDetails){
+        List<MeetingRoom> meetingRooms = new ArrayList<>();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person person = personService.findByEmail(auth.getName());
+        for (MeetingRoom meetingRoom: meetingRoomService.findAll()) {
+            for(BookingDetails bookingDetail: meetingRoom.getBookingDetails()){
+                if(!(bookingDetail.getDate().isEqual(bookingDetails.getDate()) && bookingDetail.getStatus() == "confirmed")){
+                    meetingRooms.add(meetingRoom);
+                    break;
+                }
+            }
+        }
+        model.addAttribute("role", person.getRole().getRole());
+        model.addAttribute("meetingRooms", meetingRooms);
         return "meeting-room/room-management";
     }
 

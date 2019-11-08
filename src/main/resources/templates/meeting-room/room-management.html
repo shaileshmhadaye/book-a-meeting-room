@@ -28,7 +28,16 @@
         </div>
     </nav>
         <div class="container">
-
+            <div th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'">
+                <form  action="#" th:action="@{/filter-room-with-date}" th:object="${bookingDetails}" th:method="POST">
+                    <tr>
+                        <td>Date:</td><td><input type="date" name="date" th:field="*{date}" autofocus></td>
+                    </tr>
+                    <tr>
+                        <td><input class="button2" type="submit" id="submit" value="Book"></td>
+                    </tr>
+                </form>
+            </div>
             <div class="panel-group" style="margin-top:40px">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
