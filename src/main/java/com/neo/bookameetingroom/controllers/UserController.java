@@ -1,8 +1,9 @@
 package com.neo.bookameetingroom.controllers;
 
 import com.neo.bookameetingroom.model.BookingDetails;
+import com.neo.bookameetingroom.model.ChangeInfoRequest;
 import com.neo.bookameetingroom.model.Person;
-import com.neo.bookameetingroom.repositories.BookingDetailsRepository;
+import com.neo.bookameetingroom.repositories.ChangeInfoRequestRepository;
 import com.neo.bookameetingroom.services.BookingService;
 import com.neo.bookameetingroom.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,9 @@ public class UserController {
 
     @Autowired
     BookingService bookingService;
+
+    @Autowired
+    ChangeInfoRequestRepository changeInfoRequestRepository;
 
     public UserController(PersonService personService) {
         this.personService = personService;
@@ -111,5 +114,56 @@ public class UserController {
         user.setLastName(person.getLastName());
         personService.save(user);
         return "redirect:/user/user-profile";
+    }
+
+    @RequestMapping("/change-email")
+    public ModelAndView changeEmail(ModelAndView modelAndView){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("changeRequest", new ChangeInfoRequest());
+        modelAndView.addObject("oldEmail", user.getEmail());
+        modelAndView.setViewName("user/change-email");
+        return modelAndView;
+    }
+
+    @RequestMapping("/change-department")
+    public ModelAndView changeDepartment(ModelAndView modelAndView){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("changeRequest", new ChangeInfoRequest());
+        modelAndView.addObject("oldDepartment", user.getDepartment());
+        modelAndView.setViewName("user/change-department");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/save-changes/{type}", method = RequestMethod.POST)
+    public ModelAndView saveChanges(ModelAndView modelAndView,
+                                    @ModelAttribute("changeRequest") ChangeInfoRequest changeInfoRequest,
+                                    @PathVariable("type") int type){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        if(type == 1){
+            changeInfoRequest.setType("email");
+            changeInfoRequest.setOldOne(user.getEmail());
+        }
+        if(type == 2){
+            changeInfoRequest.setType("department");
+            changeInfoRequest.setOldOne(user.getDepartment());
+        }
+        changeInfoRequest.setStatus("pending");
+        changeInfoRequest.setPerson(user);
+        changeInfoRequestRepository.save(changeInfoRequest);
+        modelAndView.setViewName("redirect:/user/user-profile");
+        return modelAndView;
+    }
+
+    @RequestMapping("/change-requests")
+    public ModelAndView changeRequests(ModelAndView modelAndView){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("role", user.getRole().getRole());
+        modelAndView.addObject("changeRequests", user.getChangeInfoRequests());
+        modelAndView.setViewName("user/profile-change requests");
+        return modelAndView;
     }
 }

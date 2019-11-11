@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -43,15 +44,6 @@ public class MeetingRoomController {
         Person person = personService.findByEmail(auth.getName());
         model.addAttribute("username", "Welcome " + person.getFirstName() + " " + person.getLastName() + " (" + person.getEmail() + ")");
         LocalDate today = LocalDate.now();
-        for (MeetingRoom meetingRoom:meetingRoomService.findAll()) {
-            for (BookingDetails bookingDetail: meetingRoom.getBookingDetails()) {
-                if(bookingDetail.getDate().isEqual(today) && bookingDetail.getStatus().equals("confirmed")){
-                    meetingRoom.setStatus("occupied");
-                }
-                else meetingRoom.setStatus("available");
-            }
-            meetingRoomService.save(meetingRoom);
-        }
         model.addAttribute("role", person.getRole().getRole());
         PageRequest pageable = PageRequest.of(page - 1, 5, Sort.Direction.DESC, sortBy);
         Page<MeetingRoom> meetingRoomPage = meetingRoomService.getPaginatedMeetingRooms(pageable);
@@ -67,13 +59,15 @@ public class MeetingRoomController {
     }
 
     @RequestMapping("/filter-room-with-date")
-    public String filterRoom(Model model, BookingDetails bookingDetails){
+    public String filterRoom(Model model,
+                             @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
         List<MeetingRoom> meetingRooms = new ArrayList<>();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person person = personService.findByEmail(auth.getName());
         for (MeetingRoom meetingRoom: meetingRoomService.findAll()) {
+            if(meetingRoom.getBookingDetails().isEmpty()) meetingRooms.add(meetingRoom);
             for(BookingDetails bookingDetail: meetingRoom.getBookingDetails()){
-                if(!(bookingDetail.getDate().isEqual(bookingDetails.getDate()) && bookingDetail.getStatus() == "confirmed")){
+                if(!(bookingDetail.getDate().isEqual(date) && bookingDetail.getStatus().equals("confirmed"))){
                     meetingRooms.add(meetingRoom);
                     break;
                 }

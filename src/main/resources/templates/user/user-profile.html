@@ -30,6 +30,12 @@
     </div>
 </nav>
     <div class="container">
+        <div>
+            <form th:action="@{/user/change-requests}" method="">
+                <button class="button2" name="requests"
+                        type="Submit">Profile Change Requests >></button>
+            </form>
+        </div>
         <div class="panel-group" style="margin-top:40px">
             <div class="panel panel-primary">
                 <div class="panel-heading">
@@ -54,13 +60,16 @@
                             <td>Last Name:</td><td th:text="${user.lastName}"></td>
                         </tr>
                         <tr>
-                            <td>Email ID:</td><td th:text="${user.email}"></td>
+                            <td>Email ID:</td><td th:text="${user.email}"></td><td><a href="/user/change-email">Change Email Id</a></td>
                         </tr>
                         <tr>
-                            <td>Department:</td><td th:text="${user.department}"></td>
+                            <td>Department:</td><td th:text="${user.department}"></td><td><a href="/user/change-department">Change Department</a></td>
                         </tr>
                         <tr>
                             <td>Location</td><td th:text="${user.location}"></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/forgot-password">Change Password</a></td>
                         </tr>
                     </table>
                 </div>

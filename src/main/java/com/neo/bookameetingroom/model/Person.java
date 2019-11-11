@@ -43,4 +43,7 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<BookingDetails> bookingDetails;
 
+    @OneToMany(mappedBy = "person")
+    private List<ChangeInfoRequest> changeInfoRequests;
+
 }

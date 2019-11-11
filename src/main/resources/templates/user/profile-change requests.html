@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Profile Change Requests</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/design.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/homepage">Book A MeetingRoom</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li th:if="${role} == 'Admin'"><a href="/admin/console/1">Users</a></li>
+            <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
+            <li><a href="/room-management/1">Rooms</a></li>
+            <li class="active" th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/1">Bookings</a></li>
+            <li class="active" th:if="${role} == 'Admin'"><a href="/admin/room-allocation/1">Bookings</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/logout}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="panel-group" style="margin-top:40px">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3>Profile Change Requests</h3>
+            </div>
+            <div class="container">
+                <table class="table table-hover" id="users">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Previous</th>
+                        <th>New</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="changeRequest: ${changeRequests}">
+                        <td th:text="${changeRequest.id}">1</td>
+                        <td th:text="${changeRequest.type}">Test</td>
+                        <td th:text="${changeRequest.oldOne}">Class</td>
+                        <td th:text="${changeRequest.newOne}">Class</td>
+                        <td th:text="${changeRequest.status}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="row" th:fragment="pagination">-->
+<!--    <div class="col-md-2"></div>-->
+<!--    <div class="col-md-8">-->
+<!--        <nav aria-label="Pagination">-->
+<!--            <ul class="pagination justify-content-center">-->
+<!--                <li class="page-item" th:each="pageNumber : ${pageNumbers}" >-->
+<!--                    <a class="page-link" th:href="@{|/user/view-booking-request/${pageNumber}|}" th:text=${pageNumber}>1</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--    <div class="col-md-2"></div>-->
+<!--</div>-->
+</body>
+</html>

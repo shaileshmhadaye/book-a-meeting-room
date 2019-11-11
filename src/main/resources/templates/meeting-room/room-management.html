@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav">
                 <li th:if="${role} == 'Admin'"><a href="/admin/console/1">Users</a></li>
                 <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/user-profile">Profile</a></li>
-                <li class="active"><a href="/room-management/1">Rooms</a></li>
+                <li class="active"><a href="/room-management/1">Meeting Rooms</a></li>
                 <li th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'"><a href="/user/view-booking-request/1">Bookings</a></li>
                 <li th:if="${role} == 'Admin'"><a href="/admin/room-allocation/1">Bookings</a></li>
             </ul>
@@ -29,12 +29,12 @@
     </nav>
         <div class="container">
             <div th:if="${role} == 'User' or ${role} == 'TL' or ${role} == 'PM'">
-                <form  action="#" th:action="@{/filter-room-with-date}" th:object="${bookingDetails}" th:method="POST">
+                <form  action="#" th:action="@{/filter-room-with-date}" th:method="POST">
                     <tr>
-                        <td>Date:</td><td><input type="date" name="date" th:field="*{date}" autofocus></td>
+                        <td>Date:</td><td><input type="date" name="date" autofocus></td>
                     </tr>
                     <tr>
-                        <td><input class="button2" type="submit" id="submit" value="Book"></td>
+                        <td><input class="button2" type="submit" id="submit" value="Check Availability"></td>
                     </tr>
                 </form>
             </div>
@@ -58,7 +58,7 @@
                                 <th>Description</th>
                                 <th>Location</th>
                                 <th>Facilities</th>
-                                <th>Status</th>
+<!--                                <th>Status</th>-->
                                 <th colspan="2">Operations</th>
                             </tr>
                             </thead>
@@ -68,7 +68,7 @@
                                 <td th:text="${meetingRoom.description}">Test</td>
                                 <td th:text="${meetingRoom.location}">Class</td>
                                 <td th:text="${meetingRoom.facilities}">testAdmin</td>
-                                <td th:text="${meetingRoom.status}"></td>
+<!--                                <td th:text="${meetingRoom.status}"></td>-->
                                 <td th:if="${role} == 'Admin'">
                                     <a th:href="@{'/admin/update-meeting-room/'+ ${meetingRoom.id}}"
                                         class="btn btn-primary">Edit

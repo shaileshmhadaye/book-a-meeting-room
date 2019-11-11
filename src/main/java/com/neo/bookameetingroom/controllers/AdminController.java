@@ -1,10 +1,12 @@
 package com.neo.bookameetingroom.controllers;
 
 import com.neo.bookameetingroom.model.*;
+import com.neo.bookameetingroom.repositories.ChangeInfoRequestRepository;
 import com.neo.bookameetingroom.repositories.FacilityRepository;
 import com.neo.bookameetingroom.repositories.RoleRepository;
 import com.neo.bookameetingroom.services.MeetingRoomService;
 import com.neo.bookameetingroom.services.PersonService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
+@Slf4j
 @RequestMapping("/admin")
 public class AdminController {
 
@@ -38,6 +41,9 @@ public class AdminController {
 
     @Autowired
     private FacilityRepository facilityRepository;
+
+    @Autowired
+    private ChangeInfoRequestRepository changeInfoRequestRepository;
 
     @RequestMapping(value="/console/{page}", method = RequestMethod.GET)
     public ModelAndView console(@PathVariable(value = "page") int page,
@@ -179,6 +185,37 @@ public class AdminController {
             personService.save(person);
             modelAndView.setViewName("redirect:/admin/console/1");
         }
+        return modelAndView;
+    }
+
+    @RequestMapping("/user-info-change-requests")
+    public ModelAndView changeRequests(ModelAndView modelAndView){
+        modelAndView.addObject("changeRequests", changeInfoRequestRepository.findAll());
+        modelAndView.setViewName("admin/user-info-change-requests");
+        return modelAndView;
+    }
+
+    @PostMapping("/edit-with-request/{request_id}")
+    public String  editUser(@PathVariable(value = "request_id") Long id){
+        ChangeInfoRequest changeInfoRequest = changeInfoRequestRepository.findById(id).orElse(null);
+        Person person = personService.findById(changeInfoRequest.getPerson().getId()).orElse(null);
+        if(changeInfoRequest.getType().equals("email")){
+            person.setEmail(changeInfoRequest.getNewOne());
+        }else{
+            person.setDepartment(changeInfoRequest.getNewOne());
+        }
+        changeInfoRequest.setStatus("confirmed");
+        changeInfoRequestRepository.save(changeInfoRequest);
+        personService.update(person);
+        return "redirect:/admin/user-info-change-requests";
+    }
+
+    @PostMapping("/reject-with-request/{request_id}")
+    public ModelAndView rejectRequest(ModelAndView modelAndView, @PathVariable("request_id") Long id){
+        ChangeInfoRequest changeInfoRequest = changeInfoRequestRepository.findById(id).orElse(null);
+        changeInfoRequest.setStatus("rejected");
+        changeInfoRequestRepository.save(changeInfoRequest);
+        modelAndView.setViewName("redirect:/admin/user-info-change-requests");
         return modelAndView;
     }
 }
