@@ -45,6 +45,7 @@ public class AdminController {
     @Autowired
     private ChangeInfoRequestRepository changeInfoRequestRepository;
 
+    //==============================Users==============================================
     @RequestMapping(value="/console/{page}", method = RequestMethod.GET)
     public ModelAndView console(@PathVariable(value = "page") int page,
                                 @RequestParam(defaultValue = "id") String sortBy){
@@ -62,7 +63,8 @@ public class AdminController {
         modelAndView.addObject("activeUserList", true);
         modelAndView.addObject("users", userPage.getContent());
 
-        modelAndView.addObject("username", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("username", "Welcome " + user.getFirstName() +
+                " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.setViewName("admin/console");
         return modelAndView;
     }
@@ -76,7 +78,8 @@ public class AdminController {
     }
 
     @PutMapping(value = "/editSave/{id}")
-    public String editSave(@PathVariable Long id, @RequestParam(name = "role") Long role, @Valid @ModelAttribute("person") Person person){
+    public String editSave(@PathVariable Long id, @RequestParam(name = "role") Long role,
+                           @Valid @ModelAttribute("person") Person person){
         Role role1 = roleRepository.findById(role).orElse(null);
         person.setRole(role1);
         personService.update(person);
@@ -88,7 +91,9 @@ public class AdminController {
         personService.deleteById(id);
         return "redirect:/admin/console/1";
     }
+    //===============================================================================================
 
+    //=============================Meeting Rooms(add, update and delete)==================================
     @RequestMapping(value = "/addMeetingRoom")
     public String addMeetingRoom(Model model){
         model.addAttribute("facilities", facilityRepository.findAll());
@@ -159,7 +164,9 @@ public class AdminController {
         modelAndView.setViewName("redirect:/room-management/1");
         return modelAndView;
     }
+    //==================================================================================================
 
+    //=======================add new user=======================================
     @RequestMapping(value = "/add-user", method = RequestMethod.GET)
     public ModelAndView register(){
         ModelAndView modelAndView = new ModelAndView();
@@ -187,7 +194,9 @@ public class AdminController {
         }
         return modelAndView;
     }
+    //================================================================================
 
+    //================================user profile change requests=======================================
     @RequestMapping("/user-info-change-requests")
     public ModelAndView changeRequests(ModelAndView modelAndView){
         modelAndView.addObject("changeRequests", changeInfoRequestRepository.findAll());
@@ -218,4 +227,5 @@ public class AdminController {
         modelAndView.setViewName("redirect:/admin/user-info-change-requests");
         return modelAndView;
     }
+    //====================================================================================================
 }

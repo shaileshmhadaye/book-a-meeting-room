@@ -57,7 +57,6 @@ public class UserController {
         modelAndView.addObject("activeBookingsList", true);
         modelAndView.addObject("bookingDetails", bookingDetailsPage.getContent());
         modelAndView.addObject("username", "Welcome " + person.getFirstName() + " " + person.getLastName() + " (" + person.getEmail() + ")");
-        modelAndView.addObject("temp", "1");
         modelAndView.addObject("role", person.getRole().getRole());
         modelAndView.setViewName("user/booking-requests");
         return modelAndView;
@@ -88,6 +87,7 @@ public class UserController {
         return modelAndView;
     }
 
+    //=================================Show and edit user profile=================================================
     @RequestMapping("/user-profile")
     public String userProfile(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -115,11 +115,14 @@ public class UserController {
         personService.save(user);
         return "redirect:/user/user-profile";
     }
+    //========================================================================================================
 
+    //==============================change Email and Department request===========================================
     @RequestMapping("/change-email")
     public ModelAndView changeEmail(ModelAndView modelAndView){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("role", user.getRole().getRole());
         modelAndView.addObject("changeRequest", new ChangeInfoRequest());
         modelAndView.addObject("oldEmail", user.getEmail());
         modelAndView.setViewName("user/change-email");
@@ -130,6 +133,7 @@ public class UserController {
     public ModelAndView changeDepartment(ModelAndView modelAndView){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person user = personService.findByEmail(auth.getName());
+        modelAndView.addObject("role", user.getRole().getRole());
         modelAndView.addObject("changeRequest", new ChangeInfoRequest());
         modelAndView.addObject("oldDepartment", user.getDepartment());
         modelAndView.setViewName("user/change-department");
@@ -166,4 +170,5 @@ public class UserController {
         modelAndView.setViewName("user/profile-change requests");
         return modelAndView;
     }
+    //=====================================================================================================
 }

@@ -58,26 +58,45 @@ public class MeetingRoomController {
         return "meeting-room/room-management";
     }
 
+    //======================check room availability with date========================================
     @RequestMapping("/filter-room-with-date")
     public String filterRoom(Model model,
                              @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
-        List<MeetingRoom> meetingRooms = new ArrayList<>();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Person person = personService.findByEmail(auth.getName());
-        for (MeetingRoom meetingRoom: meetingRoomService.findAll()) {
-            if(meetingRoom.getBookingDetails().isEmpty()) meetingRooms.add(meetingRoom);
-            for(BookingDetails bookingDetail: meetingRoom.getBookingDetails()){
-                if(!(bookingDetail.getDate().isEqual(date) && bookingDetail.getStatus().equals("confirmed"))){
-                    meetingRooms.add(meetingRoom);
-                    break;
+        LocalDate today = LocalDate.now();
+        if(date.isBefore(today)){
+            model.addAttribute("errorMessage", "* Please Enter the valid date");
+            model.addAttribute("username", "Welcome " + person.getFirstName() + " " + person.getLastName() + " (" + person.getEmail() + ")");
+            model.addAttribute("role", person.getRole().getRole());
+            model.addAttribute("meetingRooms", meetingRoomService.findAll());
+            return "meeting-room/room-management";
+        }else {
+            List<MeetingRoom> meetingRooms = new ArrayList<>();
+            for (MeetingRoom meetingRoom: meetingRoomService.findAll()) {
+                boolean flag = true;
+                if(meetingRoom.getBookingDetails().isEmpty()) meetingRooms.add(meetingRoom);
+                else{
+                    for(BookingDetails bookingDetail: meetingRoom.getBookingDetails()){
+                        if(bookingDetail.getDate().isEqual(date) && bookingDetail.getStatus().equals("confirmed")){
+                            flag = false;
+                            break;
+                        }else
+                            flag = true;
+                    }
+                    if(flag)
+                        meetingRooms.add(meetingRoom);
                 }
             }
+            model.addAttribute("username", "Welcome " + person.getFirstName() + " " + person.getLastName() + " (" + person.getEmail() + ")");
+            model.addAttribute("role", person.getRole().getRole());
+            model.addAttribute("meetingRooms", meetingRooms);
+            return "meeting-room/room-management";
         }
-        model.addAttribute("role", person.getRole().getRole());
-        model.addAttribute("meetingRooms", meetingRooms);
-        return "meeting-room/room-management";
     }
 
+    //===============================Book a meeting room=====================================================
     @RequestMapping(value = "/book-a-meeting-room/{room_id}", method = RequestMethod.GET)
     public String bookAMeetingRoom(@PathVariable("room_id") Long id, Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -99,8 +118,9 @@ public class MeetingRoomController {
         bookingService.save(bookingDetails);
         return "meeting-room/room-management";
     }
+    //=================================================================================================
 
-    //==================================================================================================================
+    //======================Filter with room status====================================================
 
     @RequestMapping("/admin/room-allocation/pending")
     public String roomAllocationPending(Model model){
@@ -159,6 +179,7 @@ public class MeetingRoomController {
     }
     //==================================================================================================================
 
+    //==================================For Admin===========================================
     @RequestMapping("/confirm-booking/{book_id}")
     public String confirmBooking(@PathVariable("book_id") Long book_id){
         BookingDetails bookingDetails = bookingService.findById(book_id).orElse(null);
@@ -175,6 +196,10 @@ public class MeetingRoomController {
         BookingDetails bookingDetails = bookingService.findById(book_id).orElse(null);
         bookingDetails.setStatus("cancelled");
         bookingService.save(bookingDetails);
-        return "redirect:/admin/room-allocation/1";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Person person = personService.findByEmail(auth.getName());
+        if(person.getRole().getRole().equals("Admin")){return "redirect:/admin/room-allocation/1";}
+        else return "redirect:/user/view-booking-request/1";
     }
+    //======================================================================================
 }

@@ -41,6 +41,7 @@
                         <th>type</th>
                         <th>Previous</th>
                         <th>New</th>
+                        <th>Requested by</th>
                         <th colspan="2">Action</th>
                     </tr>
                     </thead>
@@ -50,6 +51,7 @@
                         <td th:text="${changeRequest.type}">Test</td>
                         <td th:text="${changeRequest.oldOne}">Class</td>
                         <td th:text="${changeRequest.newOne}">test@example.com</td>
+                        <td th:text="${changeRequest.Person.firstName}"></td>
                         <td th:if="${changeRequest.status} == 'pending'">
                             <form th:action="@{/admin/edit-with-request/{id}(id=${changeRequest.id})}" method="post">
                                 <button class="btn btn-primary" name="change"
